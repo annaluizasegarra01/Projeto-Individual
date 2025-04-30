@@ -1,0 +1,186 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: "Inter Tight", sans-serif;
+    background-color: #ffffff;
+}
+
+.header{
+    height: 90px;
+    border-bottom: 2px solid #ffffff;
+}
+
+.titulo{
+    color: #3b3e3f;
+    width: fit-content;
+    font-weight: 300;
+}
+
+.container{
+    display: flex;
+    width: 80%;
+    margin: auto;
+}
+
+/*HEATHER*/
+
+.header .container{
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.navbar {
+    width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    list-style: none;
+    color: #3b3e3f;
+}
+
+.header a{
+    text-decoration: none;
+    color: #3b3e3f;
+}
+
+.agora{
+    font-weight: 800;
+}
+
+/*BANNER*/
+
+.banner{
+    height: 500px;
+    color: white;
+    background-image: url('../metgala_imagem_certa.jpg');
+    background-size: cover;
+}
+
+.banner .container{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.banner .container p{
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    font-weight: 200;
+}
+
+
+/*MISSÃO VISÃO VALORES*/
+
+.social{
+    background-color: #e5e5e5;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.social .container .boxes{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 30px;
+}
+
+.box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.box img{
+    width: 170px;
+}
+
+/*FOTTER*/
+
+.footer{
+    background-color: #000000;
+    height: 150px;
+    color: white;
+    display: flex;
+    font-size: 15px;
+}
+
+.footer .container{
+    justify-content: center;
+    text-align: center;
+}
+
+.version{
+    font-size: 12px;
+}
+
+/*LOGIN*/
+
+.login{
+    height: var(--tamanho-banner);
+    color: white;
+    background-image: url('../assets/imgs/bg-jelly-fish-para-home.png');
+    background-size: cover;
+}
+
+.login .container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+}
+
+.card-login{
+    width: 500px;
+    height: fit-content;
+    background-color: rgb(226, 228, 230);
+    border-radius: 5px;
+    border: none;
+    margin: 95px;
+    padding: 10px 30px;
+    text-align: center;
+    color: rgb(216, 45, 102);
+    font-weight: 600;
+}
+
+
+.campo{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.campo input{
+    padding: 7px 150px;
+    border-radius: 5px;
+    border: solid 2px rgb(146, 233, 255);
+    width: 100px;
+    text-align: center;
+}
+
+.botao{
+    background-color: rgb(216, 45, 102);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 5px 25px;
+}
+
+/*CADASTRO*/
+
+.formulario{
+    width: 400px;
+    height: fit-content;
+    background-color: rgb(226, 228, 230);
+    border-radius: 5px;
+    border: none;
+    margin: 10px;
+    padding: 15px 50px;
+    text-align: center;
+    color: rgb(216, 45, 102);
+    font-weight: 600;
+}
