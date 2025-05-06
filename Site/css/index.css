@@ -53,9 +53,9 @@ body{
 /*BANNER*/
 
 .banner{
-    height: 600px;
-    color: white;
-    background-image: url('../Img/home_img.jpeg');
+    height: 500px;
+    color: rgb(255, 255, 255);
+    background-image: url('../Img/index_html.jpg');
     background-size: cover;
 }
 
@@ -71,6 +71,7 @@ body{
     padding: 0; 
     font-size: 20px;
     font-weight: 300;
+    text-align: center;
 }
 
 .botaoCadastro {
@@ -82,7 +83,21 @@ body{
 }
 
 
-/*DONAS*/
+/*HISTORIA E DONAS*/
+
+.historia{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px;
+    padding: 40px 120px;
+}
+
+.historia p{
+    font-size: 18px;
+    font-weight: 200;
+    text-align: center;
+}
 
 .social{
     background-color: #ffffff;
@@ -118,8 +133,8 @@ body{
 }
 
 .boxes img{
-    width: 500px;
-    height: 250px;
+    width: 500px; 
+    height: 200px;
     object-fit: cover;
 }
 
