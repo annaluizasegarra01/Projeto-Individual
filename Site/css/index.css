@@ -55,7 +55,7 @@ body{
 .banner{
     height: 600px;
     color: white;
-    background-image: url('../Projeto Individual/Img/home_img.jpeg');
+    background-image: url('../Img/home_img.jpeg');
     background-size: cover;
 }
 
@@ -82,7 +82,7 @@ body{
 }
 
 
-/*MISSÃO VISÃO VALORES*/
+/*DONAS*/
 
 .social{
     background-color: #ffffff;
