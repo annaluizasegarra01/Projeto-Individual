@@ -1,9 +1,9 @@
-/*LOGIN*/
+/*LOGIN E CADASTRO*/
 
 body, html {
     margin: 0;
     padding: 0;
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: "Inter Tight", sans-serif;
     background-color: white;
     color: #111;
 }
@@ -54,6 +54,14 @@ body, html {
 form {
     display: flex;
     flex-direction: column;
+}
+
+input[type="text"] {
+    padding: 15px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 input[type="email"] {

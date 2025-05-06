@@ -53,9 +53,9 @@ body{
 /*BANNER*/
 
 .banner{
-    height: 500px;
+    height: 600px;
     color: white;
-    background-image: url('../metgala_imagem_certa.jpg');
+    background-image: url('../Projeto Individual/Img/home_img.jpeg');
     background-size: cover;
 }
 
@@ -68,9 +68,9 @@ body{
 
 .banner .container p{
     margin: 0;
-    padding: 0;
+    padding: 0; 
     font-size: 20px;
-    font-weight: 200;
+    font-weight: 300;
 }
 
 .botaoCadastro {
@@ -112,8 +112,15 @@ body{
     font-weight: 200;
 }
 
+.boxes{
+    display: flex;
+    height: 40vh;
+}
+
 .boxes img{
-    width: 300px;
+    width: 500px;
+    height: 250px;
+    object-fit: cover;
 }
 
 /*FOTTER*/
