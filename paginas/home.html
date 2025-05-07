@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cozinha</title>
+    <link rel="stylesheet" href="./css/home.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="logo">Anninha e Ba</div>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="salgados.html">Receitas salgadas</a></li>
+                <li><a href="doces.html">Receitas doces</a></li>
+                <li><a href="vegetariana.html">Receitas vegetarianas</a></li>
+                <p>|</p>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="cadastro.html">Cadastro</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="banner">
+        <div class="img">
+            <div class="container">
+                <h1>Anninha na Cozinha</h1><br>
+                <p>Esse site de receitas é uma homenagem a minha família <br> a cultura e o amor em forma de comida
+                    que é transmitida com nossas receitas!
+                </p><br><br>
+                <button class="botaoCadastro" onclick="cadastro()">Cadastro</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    function cadastro() {
+      window.location.href = "cadastro.html";
+    }
+  </script>
+
+</html>
