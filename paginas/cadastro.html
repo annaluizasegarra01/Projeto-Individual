@@ -13,7 +13,7 @@
         rel="stylesheet">
 </head>
 
-<body>
+<body class="registros">
     <header>
         <div class="logo">By Cooked</div>
         <nav>
@@ -30,21 +30,31 @@
     </header>
 
     <div class="pagina">
-        <div class="container">
+        <div class="container_cadastro">
             <div class="image-section">
-                <img src="./img/home_2.jpeg" alt="Imagem culinária">
+                <img src="./img/img_cadastro.jpeg" alt="Imagem culinária">
             </div>
             <div class="login-section"> 
-                <h2>Cadastro</h2>
+                <h1>Cadastre-se</h1><br>
                 <form>
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" placeholder="Seu nome " required>
+
                     <label for="email">E-mail</label>
                     <input type="email" id="email" placeholder="nome@email.com" required>
 
                     <label for="senha">Senha</label>
-                    <input type="password" id="senha" placeholder="Digite sua senha" required>
+                    <input type="password" id="senha" placeholder="Crie uma senha" required>
 
-                    <button type="submit">Entrar</button>
-                    <p class="link">Não tem uma conta? <a href="#">Cadastre-se</a></p>
+                    <label for="tipoReceita">Preferência</label>
+                    <select id="tipoReceita" name="tipoReceita" required>
+                        <option value="">Selecione</option>
+                        <option value="salgada">Salgada</option>
+                        <option value="doce">Doce</option>
+                        <option value="vegetariana">Vegetariana</option>
+                      </select>
+
+                    <button type="submit">Cadastrar</button>
                 </form>
             </div>
         </div>

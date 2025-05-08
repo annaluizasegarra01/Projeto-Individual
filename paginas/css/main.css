@@ -6,7 +6,7 @@
 
 body {
     font-family: "Inter Tight", sans-serif;
-    background-color: #152038;
+    background-color: #b1513e;
     color: #ffffff;
 }
 
@@ -17,7 +17,7 @@ header {
     padding: 30px 40px;
     position: sticky;
     top: 0;
-    background-color: #152038;
+    background-color: #b1513e;
     z-index: 1000;
 }
 
@@ -46,20 +46,31 @@ nav a:hover {
 
 /*FOTTER*/
 
-.footer{
-    background-color: #090e18;
-    height: 150px;
-    color: #ffffff;
-    display: flex;
-    font-size: 15px;
-}
-
-.footer .container{
-    justify-content: center;
+footer {
+    background-color: #3c5e34c7;
+    color: white;
+    padding: 20px 40px;
     text-align: center;
-}
+  }
+  
+  .footer-content {
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  footer nav {
+    margin-top: 10px;
+  }
+  
+  footer nav a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  footer nav a:hover {
+    text-decoration: underline;
+  }
 
-.version{
-    font-size: 12px;
-}
 
