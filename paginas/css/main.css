@@ -41,13 +41,13 @@ nav a {
 }
 
 nav a:hover {
-    color: #6c768b;
+    color: #a79b95;
 }
 
 /*FOTTER*/
 
 footer {
-    background-color: #3c5e34c7;
+    background-color: #3c5e34;
     color: white;
     padding: 20px 40px;
     text-align: center;

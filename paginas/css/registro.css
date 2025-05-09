@@ -8,7 +8,7 @@
 }
 
 .registros {
-  background-color: #b1513ee8;
+  background-color: #3c5e34c7;
 }
   
   .container {
@@ -73,13 +73,13 @@
   
   .login-section h2 {
     margin-bottom: 30px;
-    color: #152038;
+    color: #320a38;
   }
   
   form {
     display: flex;
     flex-direction: column;
-    color: #152038;
+    color: #320a38;
   } 
   
   label {
@@ -105,12 +105,12 @@
   }
 
   option {
-    color: #152038;
+    color: #320a38;
   }
   
   button {
     padding: 12px;
-    background-color: #152038;
+    background-color: #320a38;
     border: none;
     color: white;
     font-size: 16px;
@@ -131,7 +131,7 @@
   }
   
   .link a {
-    color: #152038;
+    color: #320a38;
     text-decoration: none;
   }
   

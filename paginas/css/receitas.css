@@ -1,6 +1,6 @@
 .receitas-container {
     padding: 20px;
-    background-color: #b1513e;
+    background-color: #9fc995c7;
     text-align: center;
   }
   
@@ -9,6 +9,8 @@
     font-weight: 400;
     margin-bottom: 30px;
     color: #ffffff;
+    text-align: start;
+    padding: 10px 170px;
   }
   
   .receita {
@@ -23,7 +25,7 @@
   }
 
   .receita p{
-    color: #152038;
+    color: #320a38;
   }
   
   .receita:hover {
@@ -50,7 +52,7 @@
   }
   
   .receita button {
-    background-color: #152038;
+    background-color: #320a38;
     border: none;
     padding: 10px 20px;
     margin-bottom: 15px;

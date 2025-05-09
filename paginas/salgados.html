@@ -45,8 +45,8 @@
             <div class="box">
                 <img src="./img/Onigiri.jpeg" alt="oni">
             </div>
-            <h3>Oniguiri</h3>
-            <button>Ver receita</button>
+            <h3>Onigiri</h3>
+            <button onclick="transfer1()">Ver receita</button>
         </div>
 
         <div class="receita">
@@ -54,7 +54,7 @@
                 <img src="./img/risoto_filet.jpeg" alt="risoto">
             </div>
             <h3>Risoto de filet mignon</h3>
-            <button>Ver receita</button>
+            <button onclick="transfer2()">Ver receita</button>
         </div>
     </section>
 
@@ -65,7 +65,7 @@
                 <img src="./img/Yakisoba.jpeg" alt="yakissoba">
             </div>
             <h3>Yakissoba</h3>
-            <button>Ver receita</button>
+            <button onclick="transfer3()">Ver receita</button>
         </div>
 
         <div class="receita">
@@ -73,7 +73,7 @@
                 <img src="./img/salada.jpeg" alt="grão">
             </div>
             <h3>Salada de grão de bico</h3>
-            <button>Ver receita</button>
+            <button onclick="transfer4()">Ver receita</button>
         </div>
 
         <div class="receita">
@@ -81,14 +81,48 @@
                 <img src="./img/Pizza Quatro Queijos.jpeg" alt="pizza">
             </div>
             <h3>Pizza de gorgonzola</h3>
-            <button>Ver receita</button>
+            <button onclick="transfer5()">Ver receita</button>
         </div>
     </section>
+        <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 By Cooked. Todos os direitos reservados.</p>
+            <nav>
+                <a href="#">Sobre</a>
+                <a href="#">Contato</a>
+            </nav>
+        </div>
+    </footer>
 </body>
 <script>
     function transfer() {
 
-        window.location.href = "../empada.html";
+        window.location.href = "receitas/empada.html";
+    }
+
+        function transfer1() {
+
+        window.location.href = "receitas/onigiri.html";
+    }
+
+        function transfer2() {
+
+        window.location.href = "receitas/filet.html";
+    }
+
+        function transfer3() {
+
+        window.location.href = "receitas/yakisoba.html";
+    }
+
+        function transfer4() {
+
+        window.location.href = "receitas/grao.html";
+    }
+
+        function transfer5() {
+
+        window.location.href = "receitas/pizza.html";
     }
 </script>
 

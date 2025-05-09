@@ -7,7 +7,7 @@ body {
 
   .comidas {
     background-color: #ffffff;
-    color: #152038
+    color: #320a38
   }
 
   h1 {
@@ -45,18 +45,8 @@ body {
   }
   
   h2 {
-    color: #091129;
+    color: #320a38;
     margin-bottom: 20px;
   }
   
-  ul, ol {
-    padding-left: 20px;
-  }
-  
-  footer {
-    background-color: #0d1b2a;
-    color: white;
-    text-align: center;
-    padding: 15px;
-  }
   

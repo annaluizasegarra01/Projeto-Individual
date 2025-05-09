@@ -20,7 +20,8 @@
 .container h1{
     margin: 0;
     padding: 0;
-    font-weight: 400;
+    font-weight: 500;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.541);
     text-align: center;
 }
 
@@ -35,6 +36,15 @@
     margin: 0;
     padding: 0;
     font-weight: 500;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.541);
+}
+
+.container_hist p{
+    margin: 0;
+    padding: 0px; 
+    font-size: 20px;
+    font-weight: 300;
+    text-align: center;
 }
 
 .container p{
@@ -47,17 +57,21 @@
 
 .botaoCadastro {
     background-color: #ffffff;
-    color: #b1513e;
+    color: #3d0f44;
     border-radius: 5px;
     border: none;
     padding: 15px 25px;
     cursor: pointer;
 }
 
+.botaoCadastro:hover {
+    transform: scale(1.02);
+  }
+
 .banner .img1{
-    height: 400px;
+    height: 500px;
     color: #ffffff;
-    background-image: url('../img/ba.jpeg');
+    background-image: url('../img/confeito_home.jpg');
     background-size: cover;
 }
 
@@ -73,18 +87,26 @@
     margin-bottom: 30px;
     color: #ffffff;
   }
+
+  .receitas-container h1 {
+    font-size: 30px;
+    font-weight: 500;
+    padding: 35px;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.541);
+    color: #ffffff;
+  }
   
   .receita {
     display: inline-block;
     width: 200px;
-    height: 270px;
-    margin: 50px;
+    height: 290px;
+    margin: 25px;
     border: 1px solid #ddd;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     background-color: #ffffff;
-    color: #152038;
+    color: #320a38;
   }
   
   .receita:hover {
@@ -99,5 +121,5 @@
   .receita h3 {
     margin: 15px 0;
     font-weight: 500;
-    color: #444;
+    color: #320a38dc;
   }
