@@ -33,46 +33,58 @@
         <h2>Receitas Vegetarianas</h2>
 
         <div class="receita">
-            <img src="" alt="empada">
+            <div class="box">
+            <img src="./img/palmito.jpeg" alt="empada">
+            </div>
             <h3>Empada de Palmito</h3>
-            <button>Ver receita</button>
+            <button onclick="transfer()">Ver receita</button>
         </div>
 
         <div class="receita">
-            <img src="" alt="ratatouille">
+            <div class="box">
+            <img src="./img/ratatouille.jpeg" alt="ratatouille">
+            </div>
             <h3>Ratatouille</h3>
-            <button>Ver receita</button>
+            <button onclick="transfer1()">Ver receita</button>
         </div>
 
         <div class="receita">
-            <img src="" alt="risoto">
+            <div class="box">
+            <img src="./img/alho.jpeg" alt="risoto">
+            </div>
             <h3>Risoto de alho poró</h3>
-            <button>Ver receita</button>
+            <button onclick="transfer2()">Ver receita</button>
         </div>
     </section>
 
     <section class="receitas-container">
 
         <div class="receita">
-            <img src="" alt="Macarrão">
-            <h3>Torta de legumes</h3>
-            <button>Ver receita</button>
+            <div class="box">
+                <img src="./img/salada.jpeg" alt="grão">
+            </div>
+            <h3>Salada de grão de bico</h3>
+            <button onclick="transfer3()">Ver receita</button>
         </div>
 
         <div class="receita">
-            <img src="" alt="Feijoada">
+            <div class="box">
+            <img src="./img/strog.jpeg" alt="strog">
+            </div>
             <h3>Strogonoff vegetariano</h3>
-            <button>Ver receita</button>
+            <button onclick="transfer4()">Ver receita</button>
         </div>
 
         <div class="receita">
-            <img src="" alt="Lasanha">
+            <div class="box">
+            <img src="./img/falafel.jpeg" alt="Lasanha">
+            </div>
             <h3>Hamburguer de falafel</h3>
-            <button>Ver receita</button>
+            <button onclick="transfer5()">Ver receita</button>
         </div>
     </section>
-    
-        <footer>
+
+    <footer>
         <div class="footer-content">
             <p>&copy; 2025 By Cooked. Todos os direitos reservados.</p>
             <nav>
@@ -83,5 +95,37 @@
     </footer>
 
 </body>
+
+<script>
+    function transfer() {
+
+        window.location.href = "receitas/palmito.html";
+    }
+
+        function transfer1() {
+
+        window.location.href = "receitas/ratatu.html";
+    }
+
+        function transfer2() {
+
+        window.location.href = "receitas/alho.html";
+    }
+
+        function transfer3() {
+
+        window.location.href = "receitas/grao.html";
+    }
+
+        function transfer4() {
+
+        window.location.href = "receitas/strog.html";
+    }
+
+        function transfer5() {
+
+        window.location.href = "receitas/falafel.html";
+    }
+</script>
 
 </html>

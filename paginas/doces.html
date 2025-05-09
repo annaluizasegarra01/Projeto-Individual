@@ -33,42 +33,54 @@
         <h2>Receitas Doces</h2>
 
         <div class="receita">
-            <img src="" alt="bolo">
+            <div class="box">
+            <img src="./img/chocolate.jpg" alt="bolo">
+            </div>
             <h3>Bolo de Chocolate e Rum</h3>
-            <button>Ver receita</button>
+            <button onclick="transfer()">Ver receita</button>
         </div>
 
         <div class="receita">
-            <img src="" alt="mochi">
+            <div class="box">
+            <img src="./img/mochi.webp" alt="mochi">
+            </div>
             <h3>Mochi Tradicional</h3>
-            <button>Ver receita</button>
+            <button onclick="transfer1()">Ver receita</button>
         </div>
 
         <div class="receita">
-            <img src="" alt="bolo">
+            <div class="box">
+            <img src="./img/limao.webp" alt="bolo">
+            </div>
             <h3>Bolo de Limão Siciliano</h3>
-            <button>Ver receita</button>
+            <button onclick="transfer2()">Ver receita</button>
         </div>
     </section>
 
     <section class="receitas-container">
 
         <div class="receita">
-            <img src="" alt="tiramisu">
+            <div class="box">
+            <img src="./img/tiramisu.png" alt="tiramisu">
+            </div>
             <h3>Tiramisù</h3>
-            <button>Ver receita</button>
+            <button onclick="transfer3()">Ver receita</button>
         </div>
 
         <div class="receita">
-            <img src="" alt="palha">
+            <div class="box">
+            <img src="./img/palha.png" alt="palha">
+            </div>
             <h3>Palha Italiana</h3>
-            <button>Ver receita</button>
+            <button onclick="transfer4()">Ver receita</button>
         </div>
 
         <div class="receita">
-            <img src="" alt="banoffee">
+            <div class="box">
+            <img src="./img/banofe.jpg" alt="banoffee">
+            </div>
             <h3>Banoffee</h3>
-            <button>Ver receita</button>
+            <button onclick="transfer5()">Ver receita</button>
         </div>
     </section>
 
@@ -82,5 +94,37 @@
         </div>
     </footer>
 </body>
+
+<script>
+    function transfer() {
+
+        window.location.href = "receitas/choco.html";
+    }
+
+        function transfer1() {
+
+        window.location.href = "receitas/mochi.html";
+    }
+
+        function transfer2() {
+
+        window.location.href = "receitas/bolo.html";
+    }
+
+        function transfer3() {
+
+        window.location.href = "receitas/tiramisu.html";
+    }
+
+        function transfer4() {
+
+        window.location.href = "receitas/palha.html";
+    }
+
+        function transfer5() {
+
+        window.location.href = "receitas/banofe.html";
+    }
+</script>
 
 </html>
