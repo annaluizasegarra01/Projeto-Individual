@@ -32,10 +32,31 @@
     <h1>Onigiri</h1>
 
     <div class="topo-receita">
+    <div class="lado-esquerdo">
         <div class="box">
             <img src="../img/oniguiri.jpg" alt="onigiri">
         </div>
+        <label for="porcoes" class="label-select">Receita para quantas pessoas: 
+            <select id="porcoes" name="porcoes">
+                <option value="2">2 pessoas</option>
+                <option value="4">4 pessoas</option>
+                <option value="6">6 pessoas</option>
+                <option value="8">8 pessoas</option>
+            </select>
+        </label>
     </div>
+    <div class="lado-direito">
+        <div class="tempo-preparo">
+            ⏱️ 50 min
+        </div>
+        <p class="descricao-receita">
+            O onigiri é uma comida japonesa tradicional feita de arroz oriental moldado, muitas vezes com recheios e envolto em alga nori.
+        </p><br>
+        <label for="favoritar" class="tempo-preparo">❤️  </label>
+        <button class="botaofavorito" onclick="favoritar()">Favoritar receita</button>
+    </div>
+</div>
+
 
     <main class="conteudo-receita">
         <section class="ingredientes">
