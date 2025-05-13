@@ -1,137 +1,155 @@
-.pagina{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin: 20px;
-    color: #320a38;
+.pagina {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 20px;
+  color: #320a38;
 }
 
 .registros {
   background-color: #3c5e34c7;
 }
-  
-  .container {
-    display: flex;
-    width: 800px;
-    height: 500px;
-    border-radius: 5px;
-    overflow: hidden;
-    background-color: #fff;
-    justify-content: center;
-    align-items: center;
-  }
 
-  .container_cadastro {
-    display: flex;
-    width: 800px;
-    height: 600px;
-    border-radius: 5px;
-    overflow: hidden;
-    background-color: #fff;
-    justify-content: center;
-    align-items: center;
-  }
+.container {
+  display: flex;
+  width: 800px;
+  height: 500px;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #fff;
+  justify-content: center;
+  align-items: center;
+}
 
-  h1 {
-    font-weight: 400;
-  }
-  
-  .image-section {
-    flex-direction: row;
-    height: 100%;
-    width: 70%;
-    background-color: #f5f5f5;
-  }
+.container_cadastro {
+  display: flex;
+  width: 800px;
+  height: 600px;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #fff;
+  justify-content: center;
+  align-items: center;
+}
 
-  .image-section-login {
-    flex-direction: row;
-    height: 100%;
-    width: 65%;
-    background-color: #f5f5f5;
-  }
-  
-  .image-section img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+h1 {
+  font-weight: 400;
+}
 
-  .image-section-login img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .login-section {
-    width: 100%;
-    padding: 50px 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .login-section h2 {
-    margin-bottom: 30px;
-    color: #320a38;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    color: #320a38;
-  } 
-  
-  label {
-    margin-bottom: 5px;
-    font-weight: 600;
-    text-align: start;
-  }
-  
-  input {
-    margin-bottom: 20px;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 16px;
-  }
+.image-section {
+  flex-direction: row;
+  height: 100%;
+  width: 70%;
+  background-color: #f5f5f5;
+}
 
-  select {
-    margin-bottom: 20px;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 16px;
-  }
+.image-section-login {
+  flex-direction: row;
+  height: 100%;
+  width: 65%;
+  background-color: #f5f5f5;
+}
 
-  option {
-    color: #320a38;
-  }
-  
-  button {
-    padding: 12px;
-    background-color: #320a38;
-    border: none;
-    color: white;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  button:hover {
-    background-color: #6c768b;
-  }
-  
-  .link {
-    margin-top: 15px;
-    font-size: 14px;
-    text-align: center;
-    color: black    ;
-  }
-  
-  .link a {
-    color: #320a38;
-    text-decoration: none;
-  }
-  
+.image-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-section-login img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.login-section {
+  width: 100%;
+  padding: 50px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-section h2 {
+  margin-bottom: 30px;
+  color: #320a38;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  color: #320a38;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: 600;
+  text-align: start;
+}
+
+input {
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+select {
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+option {
+  color: #320a38;
+}
+
+button {
+  padding: 12px;
+  background-color: #320a38;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #6c768b;
+}
+
+.link {
+  margin-top: 15px;
+  font-size: 14px;
+  text-align: center;
+  color: black;
+}
+
+.link a {
+  color: #320a38;
+  text-decoration: none;
+}
+
+
+.card_erro {
+
+  display: none;
+  background-color: #fff;
+  color: black;
+  width: 350px;
+  border-radius: 3px;
+  border: #d30000 3px solid;
+  padding: 3px;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.card_erro #mensagem_erro {
+  font-weight: 500;
+  font-size: 13px;
+}
