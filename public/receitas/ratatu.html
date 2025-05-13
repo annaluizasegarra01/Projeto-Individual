@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>By Cooked</title>
+    <link rel="stylesheet" href="../css/comidas.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="logo">By Cooked</div>
+        <nav>
+            <ul>
+                <li><a href="../home.html">Home</a></li>
+                <li><a href="../salgados.html">Receitas salgadas</a></li>
+                <li><a href="../doces.html">Receitas doces</a></li>
+                <li><a href="../vegetariana.html">Receitas vegetarianas</a></li>
+                <p>|</p>
+                <li><a href="../login.html">Login</a></li>
+                <li><a href="../cadastro.html">Cadastro</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="comidas">
+        <h1>Ratatouille</h1>
+
+        <div class="topo-receita">
+            <div class="lado-esquerdo">
+                <div class="box">
+                    <img src="../img/ratatouille.jpeg" alt="ratatu">
+                </div><br>
+                <p class="rendimento">
+                    Receita rende 10 porções
+                </p>
+            </div>
+            <div class="lado-direito">
+                <div class="tempo-preparo">
+                    ⏱️ 45 min
+                </div>
+                <p class="descricao-receita">
+                    É um prato típico da culinária francesa, teve uma maior popularidade fora de seu país de origem após
+                    o filme da Disney Ratatouille. É uma comida com um sabor muito caracteristico e fácil de fazer.
+                </p><br>
+                <label for="favoritar" class="tempo-preparo">❤️ </label>
+                <button class="botaofavorito" onclick="favoritar()">Favoritar receita</button>
+            </div>
+        </div>
+
+        <main class="conteudo-receita">
+            <section class="ingredientes">
+                <h2>Ingredientes</h2>
+                <ul>
+                    <li>1 berinjela cortada em rodelas e depois ao meio</li>
+                    <li>1 abobrinha cortada em rodelas finas</li>
+                    <li>0.5 pimentão amarelo em fatias finas</li>
+                    <li>0.5 pimentão vermelho em fatias finas</li>
+                    <li>Molho de tomate (quantidade suficiente para cobrir o fundo do refratário)</li>
+                    <li>Tomilho a gosto (opcional)</li>
+                    <li>Sal e pimenta a gosto</li>
+                    <li>Azeite a gosto</li>
+                </ul>
+            </section>
+
+            <section class="preparo">
+                <h2>Modo de Preparo</h2>
+                <ol>
+                    <li>Prepare o molho de tomate e corte todos os vegetais conforme descrito.</li>
+                    <li>Pré-aqueça o forno a 200ºC.</li>
+                    <li>Em um refratário (aprox. 22 cm de diâmetro), espalhe o molho de tomate no fundo.</li>
+                    <li>Intercale as fatias de berinjela, abobrinha, pimentão amarelo e vermelho ao redor do refratário
+                        até preencher todo o espaço.</li>
+                    <li>Tempere com sal, pimenta e tomilho (se desejar). Regue com azeite.</li>
+                    <li>Leve ao forno por 30 a 45 minutos, até que os vegetais estejam macios (teste com um garfo).</li>
+                    <li>Sirva quente como prato principal, acompanhamento ou aperitivo com torradas.</li>
+                </ol>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 By Cooked. Todos os direitos reservados.</p>
+                <nav>
+                    <a href="#">Sobre</a>
+                    <a href="#">Contato</a>
+                </nav>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>
