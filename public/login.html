@@ -69,15 +69,24 @@
         var senhaVar = senha_input.value;
 
         if (emailVar == "" || senhaVar == "") {
-
             cardErro.style.display = "block";
             mensagem_erro.innerHTML = "Preencha todos os campos para continuar!";
 
+            finalizarAguardar();
             return false;
+        } else if (!emailVar.includes("@")) {
+
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "email inválido (deve conter @)"
+
+            return false;
+        } else {
+            setInterval(sumirMensagem, 5000)
         }
 
         console.log("FORM LOGIN: ", emailVar);
         console.log("FORM SENHA: ", senhaVar);
+
 
         fetch("/usuarios/autenticar", {
             method: "POST",
@@ -101,16 +110,19 @@
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
 
-                        window.location = "dashboard.html";
-                    
+                    window.location = "dashboard.html";
+
                 });
 
-            } else {
 
+            } else {
                 console.log("Houve um erro ao tentar realizar o login!");
+
+                mensagem_erro.innerHTML = "Houve um erro ao tentar realizar o login!";
 
                 resposta.text().then(texto => {
                     console.error(texto);
+                    finalizarAguardar(texto);
                 });
             }
 
@@ -120,6 +132,11 @@
 
         return false;
     }
+
+    function sumirMensagem() {
+        cardErro.style.display = "none"
+    }
+
 
 </script>
 
