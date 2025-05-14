@@ -36,7 +36,7 @@
             </div>
             <div class="login-section">
                 <h1>Cadastre-se</h1><br>
-                <form>
+
                     <label for="nome">Nome</label>
                     <input type="text" id="nome_input" placeholder="Seu nome ">
 
@@ -58,8 +58,6 @@
                     <div class="card_erro" id="cardErro">
                         <span id="mensagem_erro"></span>
                     </div>
-
-                </form>
             </div>
         </div>
     </div>
@@ -78,13 +76,15 @@
             preferenciaVar == ""
         ) {
             cardErro.style.display = "block";
-            mensagem_erro.innerHTML =
-                "Preencher todos os campos para continuar!";
+            mensagem_erro.innerHTML = "Preencher todos os campos para continuar!";
 
-            finalizarAguardar();
             return false;
-        } else {
-            setInterval(sumirMensagem, 50000);
+        } else if (!emailVar.includes("@")) {
+
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "email inválido (deve conter @)"
+
+             return false;
         }
 
         fetch("/usuarios/cadastrar", {
@@ -105,31 +105,20 @@
                 console.log("resposta: ", resposta);
 
                 if (resposta.ok) {
-                    cardErro.style.display = "block";
-
-                    mensagem_erro.innerHTML =
-                        "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
-
-                    setTimeout(() => {
-                        window.location = "login.html";
-                    }, "2000");
+                    window.location = "login.html";
 
                     limparFormulario();
-                    finalizarAguardar();
+
                 } else {
-                    throw "Houve um erro ao tentar realizar o cadastro!";
+                    mensagem_erro.innerHTML = "Houve um erro ao tentar realizar o cadastro!";
                 }
             })
             .catch(function (resposta) {
                 console.log(`#ERRO: ${resposta}`);
-                finalizarAguardar();
+
             });
 
         return false;
-    }
-
-    function sumirMensagem() {
-        cardErro.style.display = "none";
     }
 
 </script>

@@ -13,7 +13,7 @@ use bycooked;
 create table usuario (
 id int not null auto_increment,
 nome varchar(90),
-email varchar(50),
+email varchar(50) unique,
 senha varchar(40),
 preferencia varchar(30),
 primary key (id)
