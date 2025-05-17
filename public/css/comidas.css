@@ -104,7 +104,7 @@ select {
   line-height: 1.5;
 }
 
-.botaofavorito {
+.botao-favorito {
   background-color: #ffffff;
   color: #3d0f44;
   border-radius: 5px;
@@ -114,6 +114,6 @@ select {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.26);
 }
 
-.botaofavorito:hover {
+.botao-favorito:hover {
   transform: scale(1.02);
 }

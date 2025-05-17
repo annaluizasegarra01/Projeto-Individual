@@ -48,8 +48,11 @@
                     A empada é uma receita brasileira inspirada nas tortas salgadas espanholas e portuguesas, tem gosto
                     de casa de vó, com uma massa crocante e recheios cremosos e saborosos!
                 </p><br>
-                <label for="favoritar" class="tempo-preparo">❤️ </label>
-                <button class="botaofavorito" onclick="favoritar()">Favoritar receita</button>
+
+                <button class="botao-favorito" data-receita-id="1" data-favoritado="false">
+                    ❤️ Favoritar
+                </button>
+
             </div>
         </div>
 
@@ -80,16 +83,20 @@
             <section class="preparo">
                 <h2>Modo de Preparo</h2>
                 <ol>
-                    <li>Cozer o frango na panela de pressão com um cubinho de caldo de frango e azeite, deixar por 30
+                    <li>Cozer o frango na panela de pressão com um cubinho de caldo de frango e azeite, deixar por
+                        30
                         min.</li>
                     <li>Depois de pronto reservar e desfiar o frango.</li>
-                    <li>Em outra panela coloque o azeite, um cubo de caldo de frango a cebola e o alho e refogue, depois
+                    <li>Em outra panela coloque o azeite, um cubo de caldo de frango a cebola e o alho e refogue,
+                        depois
                         coloque a tomate, refogue e jogue um pouco da água do frango.</li>
                     <li>Adicione a azeitona, o milho e a ervilha e depois coloque o frango, misture bem até tudo se
                         incorporar, reserve.</li>
-                    <li>Para a massa coloque a farinha e o sal e depois já adicione a margarina e misture com as mãos
+                    <li>Para a massa coloque a farinha e o sal e depois já adicione a margarina e misture com as
+                        mãos
                         até tudo se incorporar.</li>
-                    <li>Depois coloque o ovo e o leite juntos e misture com as mãos até virar uma massa homogênea.</li>
+                    <li>Depois coloque o ovo e o leite juntos e misture com as mãos até virar uma massa homogênea.
+                    </li>
                     <li>Dívida a massa em duas e faça duas bolas.</li>
                     <li>Abra a massa e e cubra a forma com metade dela, depois coloque o recheio no meio e coloque
                         algumas colheres de requeijão em cima.</li>
@@ -110,5 +117,66 @@
         </footer>
     </div>
 </body>
+
+<script>
+    document.querySelectorAll(".botao-favorito").forEach(botao => {
+        botao.addEventListener("click", () => {
+            const idReceita = botao.getAttribute("data-receita-id");
+            const favoritado = botao.getAttribute("data-favoritado") === "true";
+            const idUsuario = sessionStorage.ID_USUARIO;
+
+            if (!idUsuario) {
+                alert("Você precisa estar logado para favoritar uma receita.");
+                window.location.href = "../login.html";
+                return;
+            }
+
+            const url = favoritado ? "/favoritos/desfavoritar" : "/favoritos/favoritar";
+            const metodo = favoritado ? "DELETE" : "POST";
+
+            fetch(url, {
+                method: metodo,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    idUsuario: idUsuario,
+                    idReceita: idReceita
+                })
+            }).then(res => {
+                if (res.ok) {
+                    const novoEstado = !favoritado;
+                    botao.setAttribute("data-favoritado", novoEstado.toString());
+                    botao.innerText = novoEstado ? "💔 Desfavoritar" : "❤️ Favoritar";
+                } else {
+                    alert("Erro ao atualizar favorito.");
+                }
+            }).catch(err => {
+                console.error(err);
+                alert("Erro de conexão.");
+            });
+        });
+    });
+
+    window.addEventListener("load", () => {
+        const idUsuario = sessionStorage.ID_USUARIO;
+        if (!idUsuario) return;
+
+        fetch(`/favoritos/listar/${idUsuario}`)
+            .then(res => res.json())
+            .then(favoritos => {
+                const idsFavoritados = favoritos.map(f => f.fk_receitas.toString());
+
+                document.querySelectorAll(".botao-favorito").forEach(botao => {
+                    const idReceita = botao.getAttribute("data-receita-id");
+                    if (idsFavoritados.includes(idReceita)) {
+                        botao.setAttribute("data-favoritado", "true");
+                        botao.innerText = "💔 Desfavoritar";
+                    }
+                });
+            })
+            .catch(erro => console.error("Erro ao carregar favoritos:", erro));
+    });
+</script>
 
 </html>

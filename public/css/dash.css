@@ -1,49 +1,33 @@
-*{
-  margin: 0;
-  padding: 0;  
-  box-sizing: border-box;
+
+h2 {
+text-align: center;
+font-weight: 500;
 }
 
-
-body {
-  font-family: "Roboto-Regular";
-  margin: 20px;
-  background: #faf3f5;
-}
-.dashboard {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+.card-receita {
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #fff6f6;
+    box-shadow: 2px 2px 8px #1a1a1ab2;
+    color: #320a38;
 }
 
-.card, .chart-container {
-  background: white;
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  text-align: left;
-  justify-content: space-between;
+.card-receita h3 {
+    margin-top: 0;
 }
 
-.chart {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+.desfavoritar {
+    background-color: #ffcccc;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 10px;
 }
 
-.chart-container canvas {
-  width: 100%;
-  height: auto;
-}
-.kpi {
-  display: flex;
-  justify-content: space-between;
-}
-.kpi h3 {
-  margin: 0;
-  font-size: 18px;
-}
-.kpi h2 {
-  margin: 5px 0 0;
-  color: rgb(20, 219, 2);
+.desfavoritar:hover {
+    background-color: #ff9999;
 }

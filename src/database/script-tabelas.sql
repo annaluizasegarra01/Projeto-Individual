@@ -11,27 +11,27 @@ create database bycooked;
 use bycooked;
 
 create table usuario (
-id int not null auto_increment,
+idUsuario int not null auto_increment,
 nome varchar(90),
 email varchar(50) unique,
 senha varchar(40),
 preferencia varchar(30),
-primary key (id)
+primary key (idUsuario)
 );
 
 create table receitas (
-id int not null auto_increment,
+idReceita int not null auto_increment,
 nome varchar(40),
 descricao varchar(120),
 tipo varchar(30),
-primary key (id),
+primary key (idReceita),
 constraint ck_tipo_receita check (tipo in("salgado", "doce", "vegetariano"))
 );
 
 create table favoritos (
 fk_usuario int,
 fk_receitas int,
-constraint fk_usuario_favoritou foreign key (fk_usuario) references usuario(id),
-constraint fk_receita_favorita foreign key (fk_receitas) references receitas(id),
+constraint fk_usuario_favoritou foreign key (fk_usuario) references usuario(idUsuario),
+constraint fk_receita_favorita foreign key (fk_receitas) references receitas(idReceita),
 primary key (fk_usuario, fk_receitas)
 );
