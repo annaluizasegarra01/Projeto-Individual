@@ -97,5 +97,64 @@
         </footer>
     </div>
 </body>
+<script>
+    document.querySelectorAll(".botao-favorito").forEach(botao => {
+    botao.addEventListener("click", () => {
+        const idReceita = botao.getAttribute("data-receita-id");
+        const favoritado = botao.getAttribute("data-favoritado") === "true";
+        const idUsuario = sessionStorage.ID_USUARIO;
 
+        if (!idUsuario) {
+            alert("Você precisa estar logado para favoritar uma receita.");
+            window.location.href = "../login.html";
+            return;
+        }
+
+        const url = favoritado ? "/favoritos/desfavoritar" : "/favoritos/favoritar";
+        const metodo = favoritado ? "DELETE" : "POST";
+
+        fetch(url, {
+            method: metodo,
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idUsuario: idUsuario,
+                idReceita: idReceita
+            })
+        }).then(res => {
+            if (res.ok) {
+                const novoEstado = !favoritado;
+                botao.setAttribute("data-favoritado", novoEstado.toString());
+                botao.innerText = novoEstado ? "💔 Desfavoritar" : "❤️ Favoritar";
+            } else {
+                alert("Erro ao atualizar favorito.");
+            }
+        }).catch(err => {
+            console.error(err);
+            alert("Erro de conexão.");
+        });
+    });
+});
+
+window.addEventListener("load", () => {
+    const idUsuario = sessionStorage.ID_USUARIO;
+    if (!idUsuario) return;
+
+    fetch(`/favoritos/listar/${idUsuario}`)
+        .then(res => res.json())
+        .then(favoritos => {
+            const idsFavoritados = favoritos.map(f => f.fk_receitas.toString());
+
+            document.querySelectorAll(".botao-favorito").forEach(botao => {
+                const idReceita = botao.getAttribute("data-receita-id");
+                if (idsFavoritados.includes(idReceita)) {
+                    botao.setAttribute("data-favoritado", "true");
+                    botao.innerText = "💔 Desfavoritar";
+                }
+            });
+        })
+        .catch(erro => console.error("Erro ao carregar favoritos:", erro));
+});
+</script>
 </html>
