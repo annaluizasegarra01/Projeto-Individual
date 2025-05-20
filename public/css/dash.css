@@ -1,17 +1,50 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.dash {
+    background-color: #ffffff;
+    color: #05270b;
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 20px;
+    flex-wrap: wrap;
+}
 
 h2 {
-text-align: center;
-font-weight: 500;
+    text-align: center;
+    font-weight: 500;
 }
 
 .card-receita {
     border: 2px solid #ddd;
     border-radius: 12px;
+    margin: 30px;
     padding: 15px;
+    width: 350px;
     margin-bottom: 15px;
     background-color: #fff6f6;
     box-shadow: 2px 2px 8px #1a1a1ab2;
     color: #320a38;
+    flex: 1;
+    min-width: 300px;
+    text-align: center;
+}
+
+.favorites {
+    padding: 20px;
 }
 
 .card-receita h3 {
@@ -30,4 +63,76 @@ font-weight: 500;
 
 .desfavoritar:hover {
     background-color: #ff9999;
+}
+
+.containerFav {
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    margin: 30px;
+    width: 320px;
+    height: 300px;
+    margin-bottom: 15px;
+    background-color: #fff6f6;
+    box-shadow: 2px 2px 8px #1a1a1ab2;
+    color: #320a38;
+    flex: 1;
+    min-width: 300px;
+    cursor: pointer;
+}
+
+.containerFav:hover {
+    transform: scale(1.02);
+}
+
+.containerFav img {
+    width: 316px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+h5 {
+    font-weight: 400;
+    text-align: center;
+}
+
+p {
+    font-size: 18px;
+    margin: 20px;
+    text-align: center;
+    padding: 10px;
+}
+
+.graficoPie {
+    min-width: 200px;
+    max-width: 350px;
+    flex: 1;
+}
+
+.graficoTop {
+    width: 200px;
+    height: 600px;
+    flex: 1;
+}
+
+canvas {
+    width: 100%;
+    height: auto;
+}
+
+.receitasFavoritadas {
+    padding: 20px;
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.texto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-size: 25px;
+    padding: 0px 530px;
 }

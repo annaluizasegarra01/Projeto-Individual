@@ -12,84 +12,141 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
-    <div class="fundo">
-        <header>
-            <div class="logo">By Cooked</div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="salgados.html">Receitas salgadas</a></li>
-                    <li><a href="doces.html">Receitas doces</a></li>
-                    <li><a href="vegetariana.html">Receitas vegetarianas</a></li>
-                    <p>|</p>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="cadastro.html">Cadastro</a></li>
-                </ul>
-            </nav>
-        </header>
+    <header>
+        <div class="logo">By Cooked</div>
+        <nav>
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./salgados.html">Receitas salgadas</a></li>
+                <li><a href="./doces.html">Receitas doces</a></li>
+                <li><a href="./vegetariana.html">Receitas vegetarianas</a></li>
+                <p>|</p>
+                <li><a href="./login.html">Login</a></li>
+                <li><a href="./cadastro.html">Cadastro</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <br>
-        <h2>Minhas Receitas Favoritas</h2><br>
-        <div id="receitasFavoritas"></div>
-        
+    <div class="dash">
+
+        <div id="receitasFavoritas">
+            <h2>Minhas Receitas Favoritas</h2>
+            <div onclick="irFavoritas()" class="containerFav">
+                <img src="./img/div_fav.jpeg" alt="bolo">
+                <p>Receitas Favoritadas ❤️</p>
+                <h5>Clique aqui para ver suas receitas favoritas!</h5>
+            </div>
+        </div>
+
+        <div class="graficoPie">
+            <canvas id="graficoPizza"></canvas>
+        </div>
+
+        <div class="graficoTop">
+        <canvas id="graficoTopReceitas"></canvas>
+        </div>
+
     </div>
 </body>
 
 <script>
-    const idUsuario = sessionStorage.ID_USUARIO;
-    const container = document.getElementById("receitasFavoritas");
 
-    fetch(`/favoritos/receitas/${idUsuario}`)
-        .then(res => res.json())
-        .then(receitas => {
-            if (receitas.length === 0) {
-                container.innerHTML = "<p>Você ainda não favoritou nenhuma receita.</p>";
-                return;
+function irFavoritas(){
+    window.location.href = "./favoritas.html";
+}
+
+    // Gráfico Pizza - tipos receita.
+
+     const idUsuario = sessionStorage.ID_USUARIO;
+     
+    fetch(`/graficos/grafico-pizza/${idUsuario}`)
+        .then(async res => {
+            if (!res.ok) {
+                const textoErro = await res.text(); // captura conteúdo da resposta HTML
+                console.error("Erro HTTP:", res.status, textoErro);
+                throw new Error("Erro na resposta da API");
             }
 
-            receitas.forEach(r => {
-                const div = document.createElement("div");
-                div.className = "card-receita";
-                div.innerHTML = `
-                    <h3>${r.nome}</h3>
-                    <p>${r.descricao}</p>
-                    <small>Tipo: ${r.tipo}</small><br>
-                    <button class="desfavoritar" data-id="${r.idReceita}">💔 Desfavoritar</button>
-                `;
-                container.appendChild(div);
-            });
+            return res.json();
+        })
+        .then(dados => {
+            const labels = dados.map(item => item.tipo);
+            const valores = dados.map(item => item.total);
 
-            document.querySelectorAll(".desfavoritar").forEach(botao => {
-                botao.addEventListener("click", () => {
-                    const idReceita = botao.getAttribute("data-id");
-
-                    fetch("/favoritos/desfavoritar", {
-                        method: "DELETE",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            idUsuario: idUsuario,
-                            idReceita: idReceita
-                        })
-                    }).then(res => {
-                        if (res.ok) {
-                            alert("Receita removida dos favoritos!");
-                            botao.closest(".card-receita").remove();
-                        } else {
-                            alert("Erro ao desfavoritar.");
+            const ctx = document.getElementById('graficoPizza').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: valores,
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                        borderColor: 'white',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        title: {
+                            display: true,
+                            text: 'Suas Receitas Favoritadas por Tipo'
                         }
-                    });
-                });
+                    }
+                }
             });
         })
-        .catch(err => {
-            console.error("Erro ao carregar favoritos:", err);
-            container.innerHTML = "<p>Erro ao carregar suas receitas favoritas.</p>";
+        .catch(erro => {
+            console.error("Erro ao carregar gráfico:", erro.message);
         });
+
+    // Gráfico - Ranking 5 receitas mais favoritadas.
+
+    fetch("/graficos/grafico-top-receitas")
+        .then(res => res.json())
+        .then(dados => {
+            const labels = dados.map(item => item.nome);
+            const valores = dados.map(item => item.total);
+
+            const ctx = document.getElementById('graficoTopReceitas').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Top Receitas Favoritadas',
+                        data: valores,
+                        backgroundColor: '#FF6384',
+                        borderColor: '#c0264b',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            stepSize: 1 
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: 'Top 5 Receitas Favoritadas do Site'
+                        }
+                    }
+                }
+            });
+        })
+        .catch(erro => console.error("Erro ao carregar gráfico Top Receitas:", erro));
+
 </script>
 
 </html>

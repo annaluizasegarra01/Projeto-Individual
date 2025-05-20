@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>By Cooked</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="./css/dash.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+    <header>
+        <div class="logo">By Cooked</div>
+        <nav>
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./salgados.html">Receitas salgadas</a></li>
+                <li><a href="./doces.html">Receitas doces</a></li>
+                <li><a href="./vegetariana.html">Receitas vegetarianas</a></li>
+                <p>|</p>
+                <li><a href="./login.html">Login</a></li>
+                <li><a href="./cadastro.html">Cadastro</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="dash">
+
+        <div class="texto">Receitas Favoritas ❤️</div>
+        <div class="favorites">
+            <div class="receitasFavoritadas" id="receitasFavoritas">
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    // Listando os favoritos.
+
+    const idUsuario = sessionStorage.ID_USUARIO;
+    const container = document.getElementById("receitasFavoritas");
+
+    fetch(`/favoritos/receitas/${idUsuario}`)
+        .then(res => res.json())
+        .then(receitas => {
+            if (receitas.length === 0) {
+                container.innerHTML = "<p>Você ainda não favoritou nenhuma receita 🤔</p>";
+                return;
+            }
+
+            receitas.forEach(r => {
+                const div = document.createElement("div");
+                div.className = "card-receita";
+                div.innerHTML = `
+                    <h3>${r.nome}</h3>
+                    <p>${r.descricao}</p>
+                    <small>Tipo: ${r.tipo}</small><br>
+                    <button class="desfavoritar" data-id="${r.idReceita}">💔 Desfavoritar</button>
+                `;
+                container.appendChild(div);
+            });
+
+            document.querySelectorAll(".desfavoritar").forEach(botao => {
+                botao.addEventListener("click", () => {
+                    const idReceita = botao.getAttribute("data-id");
+
+                    fetch("/favoritos/desfavoritar", {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            idUsuario: idUsuario,
+                            idReceita: idReceita
+                        })
+                    }).then(res => {
+                        if (res.ok) {
+                            alert("Receita removida dos favoritos!");
+                            botao.closest(".card-receita").remove();
+                        } else {
+                            alert("Erro ao desfavoritar.");
+                        }
+                    });
+                });
+            });
+        })
+        .catch(err => {
+            console.error("Erro ao carregar favoritos:", err);
+            container.innerHTML = "<p>Erro ao carregar suas receitas favoritas 😔</p>";
+        });
+
+</script>

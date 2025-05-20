@@ -18,7 +18,7 @@ header {
     position: sticky;
     top: 0;
     background-color: #b1513e;
-    z-index: 1000;
+    color: #ffffff;
 }
 
 .logo {
