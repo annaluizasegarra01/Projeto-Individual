@@ -42,32 +42,39 @@
 <script>
     // Listando as favoritas.
 
-    const idUsuario = sessionStorage.ID_USUARIO;
-    const container = document.getElementById("receitasFavoritas");
+    var idUsuario = sessionStorage.ID_USUARIO;
+    var container = document.getElementById("receitasFavoritas");
 
-    fetch(`/favoritos/receitas/${idUsuario}`)
-        .then(res => res.json())
-        .then(receitas => {
+    fetch(`/favoritos/receitas/ ${idUsuario}`)
+        .then(function (resposta) {
+            return resposta.json();
+        })
+        .then(function (receitas) {
             if (receitas.length === 0) {
                 container.innerHTML = "<p>Você ainda não favoritou nenhuma receita 🤔</p>";
                 return;
             }
 
-            receitas.forEach(r => {
-                const div = document.createElement("div");
+            for (var i = 0; i < receitas.length; i++) {
+                var r = receitas[i];
+
+                var div = document.createElement("div");
                 div.className = "card-receita";
-                div.innerHTML = `
-                    <h3>${r.nome}</h3>
+
+                div.innerHTML =
+                    `<h3>${r.nome}</h3>
                     <p>${r.descricao}</p>
                     <small>Tipo: ${r.tipo}</small><br>
-                    <button class="desfavoritar" data-id="${r.idReceita}">💔 Desfavoritar</button>
-                `;
-                container.appendChild(div);
-            });
+                    <button class="desfavoritar" data-id="${r.idReceita}">💔 Desfavoritar</button>`;
 
-            document.querySelectorAll(".desfavoritar").forEach(botao => {
-                botao.addEventListener("click", () => {
-                    const idReceita = botao.getAttribute("data-id");
+                container.appendChild(div);
+            }
+
+            var botoes = document.getElementsByClassName("desfavoritar");
+            for (var c = 0; c < botoes.length; c++) {
+                botoes[c].addEventListener("click", function () {
+
+                    var idReceita = this.getAttribute("data-id");
 
                     fetch("/favoritos/desfavoritar", {
                         method: "DELETE",
@@ -78,18 +85,18 @@
                             idUsuario: idUsuario,
                             idReceita: idReceita
                         })
-                    }).then(res => {
+                    }).then(function (res) {
                         if (res.ok) {
                             alert("Receita removida dos favoritos!");
-                            botao.closest(".card-receita").remove();
+                            this.closest(".card-receita").remove();
                         } else {
                             alert("Erro ao desfavoritar.");
                         }
-                    });
+                    }.bind(this));
                 });
-            });
+            }
         })
-        .catch(err => {
+        .catch(function (err) {
             console.error("Erro ao carregar favoritos:", err);
             container.innerHTML = "<p>Erro ao carregar suas receitas favoritas 😔</p>";
         });

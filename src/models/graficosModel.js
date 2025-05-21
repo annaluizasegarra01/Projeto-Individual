@@ -1,4 +1,4 @@
-const db = require("../database/config");
+const database = require("../database/config");
 
 function contarFavoritosPorTipo(idUsuario) {
     const instrucao = `
@@ -8,7 +8,7 @@ function contarFavoritosPorTipo(idUsuario) {
         WHERE f.fk_usuario = ${idUsuario}
         GROUP BY r.tipo;
     `;
-    return db.executar(instrucao); 
+    return database.executar(instrucao); 
 }
 
 function topReceitasFavoritas() {
@@ -20,11 +20,34 @@ function topReceitasFavoritas() {
         ORDER BY total DESC
         LIMIT 5;
     `;
-    return db.executar(instrucao);
+    return database.executar(instrucao);
 }
 
+function favoritasUsuario(idUsuario) {
+    var instrucaoSql = `
+        SELECT COUNT(*) AS total
+        FROM favoritos
+        WHERE fk_usuario = ${idUsuario};
+    `;
+    return database.executar(instrucaoSql);
+}
+
+function tipoPreferido(idUsuario) {
+    var instrucaoSql = `
+        SELECT r.tipo, COUNT(*) AS total
+        FROM favoritos f
+        JOIN receitas r ON f.fk_receitas = r.idReceita
+        WHERE f.fk_usuario = ${idUsuario}
+        GROUP BY r.tipo
+        ORDER BY total DESC
+        LIMIT 1;
+    `;
+    return database.executar(instrucaoSql);
+}
 
 module.exports = {
     contarFavoritosPorTipo,
-    topReceitasFavoritas
+    topReceitasFavoritas,
+    favoritasUsuario,
+    tipoPreferido
 };

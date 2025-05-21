@@ -18,12 +18,12 @@
         <div class="logo">By Cooked</div>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="salgados.html">Receitas salgadas</a></li>
-                <li><a href="doces.html">Receitas doces</a></li>
-                <li><a href="vegetariana.html">Receitas vegetarianas</a></li>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../salgados.html">Receitas salgadas</a></li>
+                <li><a href="../doces.html">Receitas doces</a></li>
+                <li><a href="../vegetariana.html">Receitas vegetarianas</a></li>
                 <p>|</p>
-                <li><a href="dashboard.html">🧑🏻‍🍳 Usuário</a></li>
+                <li><a href="../dashboard.html">🧑🏻‍🍳 Usuário</a></li>
             </ul>
         </nav>
     </header>
@@ -119,11 +119,15 @@
 </body>
 
 <script>
-    document.querySelectorAll(".botao-favorito").forEach(botao => {
-        botao.addEventListener("click", () => {
-            const idReceita = botao.getAttribute("data-receita-id");
-            const favoritado = botao.getAttribute("data-favoritado") === "true";
-            const idUsuario = sessionStorage.ID_USUARIO;
+    var botoes = document.querySelectorAll(".botao-favorito");
+
+    for (var i = 0; i < botoes.length; i++) {
+        var botao = botoes[i];
+
+        botao.addEventListener("click", function () {
+            var idReceita = this.getAttribute("data-receita-id");
+            var favoritado = this.getAttribute("data-favoritado") === "true";
+            var idUsuario = sessionStorage.ID_USUARIO;
 
             if (!idUsuario) {
                 alert("Você precisa estar logado para favoritar uma receita.");
@@ -131,10 +135,18 @@
                 return;
             }
 
-            const url = favoritado ? "/favoritos/desfavoritar" : "/favoritos/favoritar";
-            const metodo = favoritado ? "DELETE" : "POST";
+            var caminho;
+            var metodo;
 
-            fetch(url, {
+            if (favoritado) {
+                caminho = "/favoritos/desfavoritar";
+                metodo = "DELETE";
+            } else {
+                caminho = "/favoritos/favoritar";
+                metodo = "POST";
+            }
+
+            fetch(caminho, {
                 method: metodo,
                 headers: {
                     "Content-Type": "application/json"
@@ -143,20 +155,22 @@
                     idUsuario: idUsuario,
                     idReceita: idReceita
                 })
-            }).then(res => {
+            }).then(function (res) {
                 if (res.ok) {
-                    const novoEstado = !favoritado;
+                    var novoEstado = !favoritado;
+        
                     botao.setAttribute("data-favoritado", novoEstado.toString());
                     botao.innerText = novoEstado ? "💔 Desfavoritar" : "❤️ Favoritar";
                 } else {
                     alert("Erro ao atualizar favorito.");
                 }
-            }).catch(err => {
+            }).catch(function (err) {
                 console.error(err);
                 alert("Erro de conexão.");
             });
         });
-    });
+    }
+
 
     window.addEventListener("load", () => {
         const idUsuario = sessionStorage.ID_USUARIO;
@@ -165,15 +179,22 @@
         fetch(`/favoritos/listar/${idUsuario}`)
             .then(res => res.json())
             .then(favoritos => {
-                const idsFavoritados = favoritos.map(f => f.fk_receitas.toString());
+                var idsFavoritados = [];
 
-                document.querySelectorAll(".botao-favorito").forEach(botao => {
-                    const idReceita = botao.getAttribute("data-receita-id");
+                for (var i = 0; i < favoritos.length; i++) {
+                    idsFavoritados.push(favoritos[i].fk_receitas.toString());
+                }
+
+                var botoes = document.querySelectorAll(".botao-favorito");
+                for (var c = 0; c < botoes.length; c++) {
+                    var botao = botoes[c];
+                    var idReceita = botao.getAttribute("data-receita-id");
+
                     if (idsFavoritados.includes(idReceita)) {
                         botao.setAttribute("data-favoritado", "true");
                         botao.innerText = "💔 Desfavoritar";
                     }
-                });
+                }
             })
             .catch(erro => console.error("Erro ao carregar favoritos:", erro));
     });

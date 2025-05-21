@@ -18,7 +18,7 @@
 
 </head>
 
-<body onload="validarSessao()">
+<body onload="validarSessao(), obterDadosGraficoPizza(idUsuario), obterDadosGraficoTopReceitas(), carregarKPIs()">
     <header>
         <div class="logo">By Cooked</div>
         <nav>
@@ -33,120 +33,249 @@
         </nav>
     </header>
 
-    <div class="dash">
-
-        <div id="receitasFavoritas">
-            <h2>Minhas Receitas Favoritas</h2>
-            <div onclick="irFavoritas()" class="containerFav">
-                <img src="./img/div_fav.jpeg" alt="bolo">
-                <p>Receitas Favoritadas ❤️</p>
-                <h5>Clique aqui para ver suas receitas favoritas!</h5>
+    <div class="conteudo-dashboard">
+        
+        <div class="coluna-esquerda">
+            <div id="receitasFavoritas">
+                <h2>Minhas Receitas Favoritas:</h2>
+                <div onclick="irFavoritas()" class="containerFav">
+                    <img src="./img/div_fav.jpeg" alt="bolo">
+                    <p>Receitas Favoritadas ❤️</p>
+                    <h5>Clique aqui para ver suas receitas favoritas!</h5>
+                </div>
             </div>
         </div>
 
-        <div class="graficoPie">
-            <canvas id="graficoPizza"></canvas>
-        </div>
+    
+        <div class="coluna-direita">
+            <h2>Meus Indicadores:</h2><br>
+            <div class="kpis">
+                <div class="kpi">
+                    <h3>N° Receitas Favoritadas</h3>
+                    <p id="kpi-favoritadas"></p>
+                </div>
+                <div class="kpi">
+                    <h3>Nível de Usuário</h3>
+                    <p id="kpi-nivel"></p>
+                </div>
+                <div class="kpi">
+                    <h3>Tipo Preferido</h3>
+                    <p id="kpi-tipo"></p>
+                </div>
+            </div>
 
-        <div class="graficoTop">
-        <canvas id="graficoTopReceitas"></canvas>
-        </div>
+            <div class="graficos">
+                <div class="graficoPie">
+                    <canvas id="graficoPizza"></canvas>
+                </div>
 
+                <div class="graficoTop">
+                    <canvas class="topReceitas" id="graficoTopReceitas"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
+
 </body>
 
 <script>
 
-function irFavoritas(){
-    window.location.href = "./favoritas.html";
-}
+    var idUsuario = sessionStorage.ID_USUARIO;
+
+    function irFavoritas() {
+        window.location.href = "./favoritas.html";
+    }
+
+    // KPIS 
+    function carregarKPIs() {
+        // KPI 1 - Quantidade de receitas favoritadas
+        fetch(`/graficos/favoritas-usuario/${idUsuario}`)
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (dados) {
+                var total = dados.total;
+                document.getElementById("kpi-favoritadas").innerText = total;
+
+                // KPI 2 - Nível do usuário
+                var nivel = "Iniciante 🍳";
+                if (total >= 5 && total < 10) {
+                    nivel = "Intermediário 🫕";
+                } else if (total >= 10) {
+                    nivel = "Chef de Cozinha 🧑‍🍳 ";
+                }
+                document.getElementById("kpi-nivel").innerText = nivel;
+            })
+            .catch(function (erro) {
+                console.error("Erro:", erro);
+            });
+
+
+        // KPI 3 - Tipo de receita preferido
+        fetch(`/graficos/tipo-preferido/${idUsuario}`)
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (dados) {
+                document.getElementById("kpi-tipo").innerText = dados.tipo || "Indefinido";
+            })
+            .catch(function (erro) {
+                console.error("Erro:", erro);
+            });
+
+    }
+
+
+    // Obtendo Dados...
+
+    function obterDadosGraficoPizza(idUsuario) {
+
+        fetch(`/graficos/grafico-pizza/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log("Dados recebidos para gráfico de pizza:");
+                    console.log(resposta);
+
+                    plotarGraficoPizza(resposta);
+                });
+            } else {
+                console.error("Nenhum dado encontrado ou erro na API (pizza)");
+            }
+        }).catch(function (erro) {
+            console.error("Erro:", erro);
+        });
+    }
 
     // Gráfico Pizza - tipos receita.
 
-     const idUsuario = sessionStorage.ID_USUARIO;
-     
-    fetch(`/graficos/grafico-pizza/${idUsuario}`)
-        .then(async res => {
-            if (!res.ok) {
-                const textoErro = await res.text(); // captura conteúdo da resposta HTML
-                console.error("Erro HTTP:", res.status, textoErro);
-                throw new Error("Erro na resposta da API");
-            }
+    function plotarGraficoPizza(dadosRecebidos) {
+        console.log("Iniciando plotagem do gráfico de pizza...");
 
-            return res.json();
-        })
-        .then(dados => {
-            const labels = dados.map(item => item.tipo);
-            const valores = dados.map(item => item.total);
+        var labels = [];
+        var valores = [];
 
-            const ctx = document.getElementById('graficoPizza').getContext('2d');
-            new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        data: valores,
-                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-                        borderColor: 'white',
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { position: 'bottom' },
-                        title: {
-                            display: true,
-                            text: 'Suas Receitas Favoritadas por Tipo'
-                        }
+        for (var i = 0; i < dadosRecebidos.length; i++) {
+            var item = dadosRecebidos[i];
+            labels.push(item.tipo);
+            valores.push(item.total);
+        }
+
+        console.log("Labels:");
+        console.log(labels);
+        console.log("Valores:");
+        console.log(valores);
+
+        var dados = {
+            labels: labels,
+            datasets: [{
+                data: valores,
+                backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+                borderColor: "white",
+                borderWidth: 2
+            }]
+        };
+
+        var config = {
+            type: "pie",
+            data: dados,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "bottom"
+                    },
+                    title: {
+                        display: true,
+                        text: "Suas Receitas Favoritadas por Tipo"
                     }
                 }
-            });
-        })
-        .catch(erro => {
-            console.error("Erro ao carregar gráfico:", erro.message);
-        });
+            }
+        };
 
+        var meuGrafico = new Chart(
+            document.getElementById("graficoPizza"),
+            config
+        );
+    }
+
+    // Obtendo os dadinhos...
+
+    function obterDadosGraficoTopReceitas() {
+
+        fetch(`/graficos/grafico-top-receitas`, { cache: 'no-store' })
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (resposta) {
+                        console.log("Dados recebidos para gráfico Top Receitas:");
+                        console.log(resposta);
+
+                        plotarGraficoTopReceitas(resposta);
+                    });
+                } else {
+                    console.error("Erro ao buscar dados do gráfico Top Receitas.");
+                }
+            })
+            .catch(function (erro) {
+                console.error("Erro:", erro);
+            });
+    }
     // Gráfico - Ranking 5 receitas mais favoritadas.
 
-    fetch("/graficos/grafico-top-receitas")
-        .then(res => res.json())
-        .then(dados => {
-            const labels = dados.map(item => item.nome);
-            const valores = dados.map(item => item.total);
+    function plotarGraficoTopReceitas(dadosRecebidos) {
+        console.log("Iniciando plotagem do gráfico Top Receitas...");
 
-            const ctx = document.getElementById('graficoTopReceitas').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Top Receitas Favoritadas',
-                        data: valores,
-                        backgroundColor: '#FF6384',
-                        borderColor: '#c0264b',
-                        borderWidth: 1
-                    }]
+        var labels = [];
+        var valores = [];
+
+        for (var i = 0; i < dadosRecebidos.length; i++) {
+            var item = dadosRecebidos[i];
+            labels.push(item.nome);
+            valores.push(item.total);
+        }
+
+        console.log("Labels:");
+        console.log(labels);
+        console.log("Valores:");
+        console.log(valores);
+
+        var dados = {
+            labels: labels,
+            datasets: [{
+                label: 'Top Receitas Favoritadas',
+                data: valores,
+                backgroundColor: '#FF6384',
+                borderColor: '#c0264b',
+                borderWidth: 1
+            }]
+        };
+
+        var config = {
+            type: 'bar',
+            data: dados,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            stepSize: 1 
-                        }
+                plugins: {
+                    legend: {
+                        display: false
                     },
-                    plugins: {
-                        legend: { display: false },
-                        title: {
-                            display: true,
-                            text: 'Top 5 Receitas Favoritadas do Site'
-                        }
+                    title: {
+                        display: true,
+                        text: 'Top 5 Receitas Favoritadas do Site'
                     }
                 }
-            });
-        })
-        .catch(erro => console.error("Erro ao carregar gráfico Top Receitas:", erro));
+            }
+        };
+
+        var meuGrafico = new Chart(
+            document.getElementById("graficoTopReceitas"),
+            config
+        );
+    }
 
 </script>
 
