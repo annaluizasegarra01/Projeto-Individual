@@ -53,6 +53,7 @@
                     </select>
 
                     <button onclick="cadastrar()">Cadastrar</button>
+                    <p class="link">Já tem uma conta no site? <a href="#" onclick="logar()">Login</a></p>
 
                     <div class="card_erro" id="cardErro">
                         <span id="mensagem_erro"></span>
@@ -62,6 +63,10 @@
     </div>
 </body>
 <script>
+    function logar() {
+        window.location.href = "login.html";
+    }
+
     function cadastrar() {
         var nomeVar = nome_input.value;
         var emailVar = email_input.value;

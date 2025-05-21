@@ -80,6 +80,8 @@
 
             return false;
         } else {
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "Senha ou email inválido!"
             setInterval(sumirMensagem, 5000)
         }
 
@@ -118,7 +120,7 @@
             } else {
                 console.log("Houve um erro ao tentar realizar o login!");
 
-                mensagem_erro.innerHTML = "Houve um erro ao tentar realizar o login!";
+                mensagem_erro.innerHTML = "Senha e/ou email inválido!";
 
                 resposta.text().then(texto => {
                     console.error(texto);

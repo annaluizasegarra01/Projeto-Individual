@@ -18,7 +18,7 @@ function topReceitasFavoritas() {
         JOIN receitas r ON f.fk_receitas = r.idReceita
         GROUP BY r.nome
         ORDER BY total DESC
-        LIMIT 5;
+        LIMIT 3;
     `;
     return database.executar(instrucao);
 }

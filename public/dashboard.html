@@ -34,7 +34,7 @@
     </header>
 
     <div class="conteudo-dashboard">
-        
+
         <div class="coluna-esquerda">
             <div id="receitasFavoritas">
                 <h2>Minhas Receitas Favoritas:</h2>
@@ -46,7 +46,7 @@
             </div>
         </div>
 
-    
+
         <div class="coluna-direita">
             <h2>Meus Indicadores:</h2><br>
             <div class="kpis">
@@ -88,7 +88,7 @@
 
     // KPIS 
     function carregarKPIs() {
-        // KPI 1 - Quantidade de receitas favoritadas
+        // KPI 1 
         fetch(`/graficos/favoritas-usuario/${idUsuario}`)
             .then(function (resposta) {
                 return resposta.json();
@@ -97,7 +97,7 @@
                 var total = dados.total;
                 document.getElementById("kpi-favoritadas").innerText = total;
 
-                // KPI 2 - Nível do usuário
+                // KPI 2
                 var nivel = "Iniciante 🍳";
                 if (total >= 5 && total < 10) {
                     nivel = "Intermediário 🫕";
@@ -111,13 +111,13 @@
             });
 
 
-        // KPI 3 - Tipo de receita preferido
+        // KPI 3 
         fetch(`/graficos/tipo-preferido/${idUsuario}`)
             .then(function (resposta) {
                 return resposta.json();
             })
             .then(function (dados) {
-                document.getElementById("kpi-tipo").innerText = dados.tipo || "Indefinido";
+                document.getElementById("kpi-tipo").innerText = dados.tipo;
             })
             .catch(function (erro) {
                 console.error("Erro:", erro);
@@ -219,7 +219,7 @@
                 console.error("Erro:", erro);
             });
     }
-    // Gráfico - Ranking 5 receitas mais favoritadas.
+    // Gráfico - Ranking 3 receitas mais favoritadas.
 
     function plotarGraficoTopReceitas(dadosRecebidos) {
         console.log("Iniciando plotagem do gráfico Top Receitas...");
@@ -265,7 +265,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Top 5 Receitas Favoritadas do Site'
+                        text: 'Top 3 Receitas Favoritadas do Site'
                     }
                 }
             }
