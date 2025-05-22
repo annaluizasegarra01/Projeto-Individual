@@ -33,19 +33,49 @@
         </nav>
     </header>
 
+    <div class="mensagemUser" id="mensagem"></div>
     <div class="conteudo-dashboard">
-
         <div class="coluna-esquerda">
             <div id="receitasFavoritas">
                 <h2>Minhas Receitas Favoritas:</h2>
                 <div onclick="irFavoritas()" class="containerFav">
                     <img src="./img/div_fav.jpeg" alt="bolo">
                     <p>Receitas Favoritadas ❤️</p>
-                    <h5>Clique aqui para ver suas receitas favoritas!</h5>
+                    <h5><b>Clique aqui</b> para ver suas receitas favoritas!</h5>
                 </div>
             </div>
-        </div>
 
+            <div class="miniQuiz">
+                <h3>Quiz - Qual é sua motivação na cozinha? 🤔</h3>
+
+                <p>1. O que mais te inspira a cozinhar?</p>
+                <input type="radio" name="pergunta1" value="familia"> Alguém querido(a) da família<br>
+                <input type="radio" name="pergunta1" value="tecnica"> Gosto de aprender técnicas novas<br>
+                <input type="radio" name="pergunta1" value="aprender"> Preciso aprender para sobreviver<br>
+                <input type="radio" name="pergunta1" value="comer"> Só quero comer mesmo<br>
+
+                <p>2. O que você sente ao ver uma receita difícil?</p>
+                <input type="radio" name="pergunta2" value="tecnica"> É um desafio bem interessante<br>
+                <input type="radio" name="pergunta2" value="aprender"> Até tento, mas sem confiança<br>
+                <input type="radio" name="pergunta2" value="comer"> Só tento se for gostoso<br>
+                <input type="radio" name="pergunta2" value="familia"> Chamo alguém para fazer comigo<br>
+
+                <p>3. Por que você salva receitas?</p>
+                <input type="radio" name="pergunta3" value="comer"> Porque parecem gostosas<br>
+                <input type="radio" name="pergunta3" value="familia"> Para fazer em momentos especiais<br>
+                <input type="radio" name="pergunta3" value="aprender"> Para tentar aprender<br>
+                <input type="radio" name="pergunta3" value="tecnica"> Para aprimorar minhas técnicas<br><br>
+
+                <div style="text-align: center;">
+                    <button onclick="verResultado()">Ver Resultado</button>
+                </div><br>  
+
+                <div style="text-align: center;">
+                    <div id="resultadoMotivacao"></div>
+                </div>
+
+            </div>
+        </div>
 
         <div class="coluna-direita">
             <h2>Meus Indicadores:</h2><br>
@@ -65,13 +95,15 @@
             </div>
 
             <div class="graficos">
-                <div class="graficoPie">
+
+                <div class="graficoBox1">
                     <canvas id="graficoPizza"></canvas>
                 </div>
 
-                <div class="graficoTop">
+                <div class="graficoBox2">
                     <canvas class="topReceitas" id="graficoTopReceitas"></canvas>
                 </div>
+
             </div>
         </div>
     </div>
@@ -80,15 +112,74 @@
 
 <script>
 
+    // Para mostrar o nome do user
+    var nome = sessionStorage.NOME_USUARIO;
+
+    document.getElementById("mensagem").innerHTML = `Bem-vindo(a) de volta,<span> ${nome}! </span>`;
+
+    // Para buscar o id do usuário logado
     var idUsuario = sessionStorage.ID_USUARIO;
 
+    // Ir para a página de favoritas
     function irFavoritas() {
         window.location.href = "./favoritas.html";
     }
 
-    // KPIS 
+    //Mini Quiz
+
+    function verResultado() {
+
+        var r1 = document.querySelector('input[name="pergunta1"]:checked');
+        var r2 = document.querySelector('input[name="pergunta2"]:checked');
+        var r3 = document.querySelector('input[name="pergunta3"]:checked');
+
+        if (r1 == null || r2 == null || r3 == null) {
+            alert("Responda todas as perguntas!");
+            return;
+        }
+
+        var resp1 = r1.value;
+        var resp2 = r2.value;
+        var resp3 = r3.value;
+
+        var familia = 0;
+        var tecnica = 0;
+        var aprender = 0;
+        var comer = 0;
+
+        if (resp1 == "familia") familia++;
+        if (resp1 == "tecnica") tecnica++;
+        if (resp1 == "aprender") aprender++;
+        if (resp1 == "comer") comer++;
+
+        if (resp2 == "familia") familia++;
+        if (resp2 == "tecnica") tecnica++;
+        if (resp2 == "aprender") aprender++;
+        if (resp2 == "comer") comer++;
+
+        if (resp3 == "familia") familia++;
+        if (resp3 == "tecnica") tecnica++;
+        if (resp3 == "aprender") aprender++;
+        if (resp3 == "comer") comer++;
+
+        var resultado = "";
+        if (familia >= tecnica && familia >= aprender && familia >= comer) {
+            resultado = "Provavelmente sua motivação para cozinhar é o amor e a inspiração de alguém da família ❤️";
+        } else if (tecnica >= familia && tecnica >= aprender && tecnica >= comer) {
+            resultado = "Sua motivação provavelmente é o seu gosto pela culinária e pelas técnicas que aprende cozinhando 🧑‍🍳";
+        } else if (aprender >= familia && aprender >= tecnica && aprender >= comer) {
+            resultado = "Sua motivação é tentar aprender a cozinhar, está no lugar certo! 🍽️";
+        } else {
+            resultado = "Sua motivação talvez não esteja no processo, mas sim no resultado para comer! 😋";
+        }
+
+        document.getElementById("resultadoMotivacao").innerText = resultado;
+    }
+
+
+    // Carregando as kpis
     function carregarKPIs() {
-        // KPI 1 
+        // kpi 1 
         fetch(`/graficos/favoritas-usuario/${idUsuario}`)
             .then(function (resposta) {
                 return resposta.json();
@@ -253,9 +344,10 @@
             type: 'bar',
             data: dados,
             options: {
+                indexAxis: 'y', 
                 responsive: true,
                 scales: {
-                    y: {
+                    x: {
                         beginAtZero: true
                     }
                 },

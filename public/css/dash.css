@@ -71,7 +71,7 @@ h2 {
     flex: 1;
     min-width: 300px;
     text-align: center;
-}   
+}
 
 .card-receita h3 {
     margin-top: 0;
@@ -95,7 +95,7 @@ h2 {
     border: 2px solid #ddd;
     border-radius: 12px;
     margin: 30px;
-    width: 320px;
+    width: 400px;
     height: 300px;
     margin-bottom: 15px;
     background-color: #fff6f6;
@@ -111,7 +111,7 @@ h2 {
 }
 
 .containerFav img {
-    width: 316px;
+    width: 395px;
     height: 160px;
     object-fit: cover;
     border-radius: 12px;
@@ -127,18 +127,7 @@ p {
     margin: 20px;
     text-align: center;
     padding: 10px;
-}
-
-.graficoPie {
-    min-height: 200px;
-    max-height: 300px;
-    flex: 1;
-}
-
-.graficoTop {
-    min-width: 300px;
-    max-width: 500px;
-    flex: 1;
+    font-weight: 500;
 }
 
 canvas {
@@ -146,6 +135,17 @@ canvas {
     height: 70%;
 }
 
+.mensagemUser {
+    display: flex;
+    align-items: flex-start;
+    padding: 0px 60px;
+    padding-top: 20px;
+    font-size: 19px;
+}
+
+span {
+    font-weight: 600;
+}
 
 .receitasFavoritadas {
     padding: 20px;
@@ -178,7 +178,7 @@ canvas {
 /* Coluna da esquerda */
 .coluna-esquerda {
     flex: 1;
-    max-width: 380px;
+    max-width: 360px;
 }
 
 /* Coluna da direita com KPIs e gráficos */
@@ -188,6 +188,7 @@ canvas {
     flex-direction: column;
     gap: 10px;
     margin: 10px;
+    max-width: 800px;
 }
 
 /* KPIs */
@@ -212,17 +213,36 @@ canvas {
 }
 
 .graficos {
-    display: flex;
     flex-direction: row;
-    gap: 10px;
+    padding: 20px;
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
 }
 
-.listaCompras {
+.graficoBox1 {
+    height: 300px;
+    width: 300px;
+    flex: 1;
+    background-color: #ffffff;
+    justify-content: center;
+}
+
+.graficoBox2 {
+    height: 200px;
+    width: 400px;
+    flex: 1;
+    background-color: #ffffff;
+    justify-content: center;
+}
+
+.miniQuiz {
     border: 2px solid #ddd;
     border-radius: 12px;
     margin: 30px;
-    width: 320px;
-    height: 300px;
+    width: 400px;
+    height: 780px;
     margin-bottom: 15px;
     background-color: #fff6f6;
     box-shadow: 2px 2px 8px #1a1a1a85;
@@ -230,4 +250,31 @@ canvas {
     flex: 1;
     min-width: 300px;
     cursor: pointer;
+    padding: 5px;
+}
+
+.miniQuiz p {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+button {
+    background-color: #ffcccc;
+    color: #202020;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 10px;
+
+}
+
+button:hover {
+    background-color: #ff9999;
+}
+
+h3 {
+    font-weight: 500;
+    padding: 30px;
 }

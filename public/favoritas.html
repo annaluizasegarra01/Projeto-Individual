@@ -62,7 +62,7 @@
                 div.className = "card-receita";
 
                 div.innerHTML =
-                    `<h3>${r.nome}</h3>
+                    `<h3><a href="${gerarCaminhoPagina(r.nome)}" class="link-receita">${r.nome}</a></h3>
                     <p>${r.descricao}</p>
                     <small>Tipo: ${r.tipo}</small><br>
                     <button class="desfavoritar" data-id="${r.idReceita}">💔 Desfavoritar</button>`;
@@ -100,5 +100,31 @@
             console.error("Erro ao carregar favoritos:", err);
             container.innerHTML = "<p>Erro ao carregar suas receitas favoritas 😔</p>";
         });
+
+    function gerarCaminhoPagina(nomeReceita) {
+        const caminho = {
+            "Empada de frango": "./receitas/empada.html",
+            "Onigiri": "./receitas/onigiri.html",
+            "Risoto de Filet Mignon": "./receitas/filet.html",
+            "Yakissoba": "./receitas/yakisoba.html",
+            "Músculo Acebolado": "./receitas/musc.html",
+            "Pizza Napolitana": "./receitas/pizza.html",
+            "Bolo de Chocolate ao Rum": "./receitas/choco.html",
+            "Mochi Tradicional": "./receitas/mochi.html",
+            "Bolo de Limão Siciliano": "./receitas/bolo.html",
+            "Tiramisù": "./receitas/tiramisu.html",
+            "Palha Italiana": "./receitas/palha.html",
+            "Banoffee": "./receitas/banofe.html",
+            "Empadão de Palmito": "./receitas/palmito.html",
+            "Ratatouille": "./receitas/ratatu.html",
+            "Risoto de Alho Poró": "./receitas/alho.html",
+            "Salada de Grão de Bico": "./receitas/grao.html",
+            "Strogonoff vegetariano": "./receitas/strog.html",
+            "Hamburguer de falafel": "./receitas/falafel.html"
+        };
+
+        return caminho[nomeReceita] || "#";
+    }
+
 
 </script>
