@@ -1,18 +1,18 @@
 const database = require("../database/config");
 
 function contarFavoritosPorTipo(idUsuario) {
-    const instrucao = `
+    const instrucaoSql = `
         SELECT r.tipo, COUNT(*) AS total
         FROM favoritos f
         JOIN receitas r ON f.fk_receitas = r.idReceita
         WHERE f.fk_usuario = ${idUsuario}
         GROUP BY r.tipo;
     `;
-    return database.executar(instrucao); 
+    return database.executar(instrucaoSql);
 }
 
 function topReceitasFavoritas() {
-    const instrucao = `
+    const instrucaoSql = `
         SELECT r.nome, COUNT(*) AS total
         FROM favoritos f
         JOIN receitas r ON f.fk_receitas = r.idReceita
@@ -20,7 +20,7 @@ function topReceitasFavoritas() {
         ORDER BY total DESC
         LIMIT 3;
     `;
-    return database.executar(instrucao);
+    return database.executar(instrucaoSql);
 }
 
 function favoritasUsuario(idUsuario) {
@@ -45,9 +45,26 @@ function tipoPreferido(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
+function obterResumoUltimosResultados() {
+    const instrucaoSql = `
+        SELECT resultadoQuiz, COUNT(*) AS quantidade
+        FROM quiz
+        WHERE idQuiz IN (
+            SELECT MAX(idQuiz)
+            FROM quiz
+            WHERE fk_usuario IS NOT NULL
+            GROUP BY fk_usuario
+        )
+        GROUP BY resultadoQuiz;
+    `;
+    return database.executar(instrucaoSql);
+}
+
+
 module.exports = {
     contarFavoritosPorTipo,
     topReceitasFavoritas,
     favoritasUsuario,
-    tipoPreferido
+    tipoPreferido,
+    obterResumoUltimosResultados
 };

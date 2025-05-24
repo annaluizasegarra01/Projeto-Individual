@@ -16,9 +16,11 @@
 
     <script src="./js/sessao.js"></script>
 
+    <link rel="icon" href="img/By Cooked.jpg">
+
 </head>
 
-<body onload="validarSessao(), obterDadosGraficoPizza(idUsuario), obterDadosGraficoTopReceitas(), carregarKPIs()">
+<body onload="validarSessao(); inicializarDashboard(); obterAtividadeUsuario();">
     <header>
         <div class="logo">By Cooked</div>
         <nav>
@@ -68,7 +70,7 @@
 
                 <div style="text-align: center;">
                     <button onclick="verResultado()">Ver Resultado</button>
-                </div><br>  
+                </div><br>
 
                 <div style="text-align: center;">
                     <div id="resultadoMotivacao"></div>
@@ -81,17 +83,29 @@
             <h2>Meus Indicadores:</h2><br>
             <div class="kpis">
                 <div class="kpi">
-                    <h3>N° Receitas Favoritadas</h3>
+                    <h3>N° Receitas Favoritadas:</h3>
                     <p id="kpi-favoritadas"></p>
                 </div>
                 <div class="kpi">
-                    <h3>Nível de Usuário</h3>
+                    <h3>Nível de Usuário:</h3>
                     <p id="kpi-nivel"></p>
                 </div>
                 <div class="kpi">
-                    <h3>Tipo Preferido</h3>
+                    <h3>Tipo mais favoritado:</h3>
                     <p id="kpi-tipo"></p>
                 </div>
+            </div>
+
+            <div class="graficosbarras">
+
+                <div class="graficoBox2">
+                    <canvas id="graficoComparativo"></canvas>
+                </div>
+                
+                <div class="graficoBox2">
+                    <canvas class="topReceitas" id="graficoTopReceitas"></canvas>
+                </div>
+
             </div>
 
             <div class="graficos">
@@ -100,8 +114,8 @@
                     <canvas id="graficoPizza"></canvas>
                 </div>
 
-                <div class="graficoBox2">
-                    <canvas class="topReceitas" id="graficoTopReceitas"></canvas>
+                <div class="graficoBox1">
+                    <canvas id="graficoMotivacao"></canvas>
                 </div>
 
             </div>
@@ -111,6 +125,22 @@
 </body>
 
 <script>
+    // Para fazer o onload da página
+
+    function inicializarDashboard() {
+        var idUsuario = sessionStorage.ID_USUARIO;
+        console.log("ID salvo no sessionStorage:", idUsuario);
+
+        if (!idUsuario) {
+            console.error("ID do usuário não encontrado!");
+            return;
+        }
+
+        obterDadosGraficoPizza(idUsuario);
+        obterDadosGraficoTopReceitas();
+        carregarKPIs(idUsuario);
+        obterDadosGraficoMotivacao();
+    }
 
     // Para mostrar o nome do user
     var nome = sessionStorage.NOME_USUARIO;
@@ -125,60 +155,12 @@
         window.location.href = "./favoritas.html";
     }
 
-    //Mini Quiz
-
-    function verResultado() {
-
-        var r1 = document.querySelector('input[name="pergunta1"]:checked');
-        var r2 = document.querySelector('input[name="pergunta2"]:checked');
-        var r3 = document.querySelector('input[name="pergunta3"]:checked');
-
-        if (r1 == null || r2 == null || r3 == null) {
-            alert("Responda todas as perguntas!");
+    // Carregando as kpis
+    function carregarKPIs(idUsuario) {
+        if (!idUsuario) {
+            console.warn("ID do usuário não encontrado. Parando execução de KPIs.");
             return;
         }
-
-        var resp1 = r1.value;
-        var resp2 = r2.value;
-        var resp3 = r3.value;
-
-        var familia = 0;
-        var tecnica = 0;
-        var aprender = 0;
-        var comer = 0;
-
-        if (resp1 == "familia") familia++;
-        if (resp1 == "tecnica") tecnica++;
-        if (resp1 == "aprender") aprender++;
-        if (resp1 == "comer") comer++;
-
-        if (resp2 == "familia") familia++;
-        if (resp2 == "tecnica") tecnica++;
-        if (resp2 == "aprender") aprender++;
-        if (resp2 == "comer") comer++;
-
-        if (resp3 == "familia") familia++;
-        if (resp3 == "tecnica") tecnica++;
-        if (resp3 == "aprender") aprender++;
-        if (resp3 == "comer") comer++;
-
-        var resultado = "";
-        if (familia >= tecnica && familia >= aprender && familia >= comer) {
-            resultado = "Provavelmente sua motivação para cozinhar é o amor e a inspiração de alguém da família ❤️";
-        } else if (tecnica >= familia && tecnica >= aprender && tecnica >= comer) {
-            resultado = "Sua motivação provavelmente é o seu gosto pela culinária e pelas técnicas que aprende cozinhando 🧑‍🍳";
-        } else if (aprender >= familia && aprender >= tecnica && aprender >= comer) {
-            resultado = "Sua motivação é tentar aprender a cozinhar, está no lugar certo! 🍽️";
-        } else {
-            resultado = "Sua motivação talvez não esteja no processo, mas sim no resultado para comer! 😋";
-        }
-
-        document.getElementById("resultadoMotivacao").innerText = resultado;
-    }
-
-
-    // Carregando as kpis
-    function carregarKPIs() {
         // kpi 1 
         fetch(`/graficos/favoritas-usuario/${idUsuario}`)
             .then(function (resposta) {
@@ -260,7 +242,7 @@
             labels: labels,
             datasets: [{
                 data: valores,
-                backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+                backgroundColor: ["#ff9f21d2", "#ff4b90bb", "#a0f78adc"],
                 borderColor: "white",
                 borderWidth: 2
             }]
@@ -334,8 +316,8 @@
             datasets: [{
                 label: 'Top Receitas Favoritadas',
                 data: valores,
-                backgroundColor: '#FF6384',
-                borderColor: '#c0264b',
+                backgroundColor: '#ff4b90bb',
+                borderColor: '#fa5279',
                 borderWidth: 1
             }]
         };
@@ -344,7 +326,7 @@
             type: 'bar',
             data: dados,
             options: {
-                indexAxis: 'y', 
+                indexAxis: 'y',
                 responsive: true,
                 scales: {
                     x: {
@@ -368,6 +350,205 @@
             config
         );
     }
+
+    //Mini Quiz
+
+    function verResultado() {
+
+        var r1 = document.querySelector('input[name="pergunta1"]:checked');
+        var r2 = document.querySelector('input[name="pergunta2"]:checked');
+        var r3 = document.querySelector('input[name="pergunta3"]:checked');
+
+        if (r1 == null || r2 == null || r3 == null) {
+            alert("Responda todas as perguntas!");
+            return;
+        }
+
+        var resp1 = r1.value;
+        var resp2 = r2.value;
+        var resp3 = r3.value;
+
+        var familia = 0;
+        var tecnica = 0;
+        var aprender = 0;
+        var comer = 0;
+
+        if (resp1 == "familia") familia++;
+        if (resp1 == "tecnica") tecnica++;
+        if (resp1 == "aprender") aprender++;
+        if (resp1 == "comer") comer++;
+
+        if (resp2 == "familia") familia++;
+        if (resp2 == "tecnica") tecnica++;
+        if (resp2 == "aprender") aprender++;
+        if (resp2 == "comer") comer++;
+
+        if (resp3 == "familia") familia++;
+        if (resp3 == "tecnica") tecnica++;
+        if (resp3 == "aprender") aprender++;
+        if (resp3 == "comer") comer++;
+
+        var resultado = "";
+        var resultadoQuiz = "";
+        if (familia >= tecnica && familia >= aprender && familia >= comer) {
+            resultadoQuiz = "Famíia";
+            resultado = "Provavelmente sua motivação para cozinhar é o amor e a inspiração de alguém da família ❤️";
+        } else if (tecnica >= familia && tecnica >= aprender && tecnica >= comer) {
+            resultadoQuiz = "Aprimorar técnicas";
+            resultado = "Sua motivação provavelmente é o seu gosto pela culinária e pelas técnicas que aprende cozinhando 🧑‍🍳";
+        } else if (aprender >= familia && aprender >= tecnica && aprender >= comer) {
+            resultadoQuiz = "Aprender a cozinhar";
+            resultado = "Sua motivação é tentar aprender a cozinhar, está no lugar certo! 🍽️";
+        } else {
+            resultadoQuiz = "Comer";
+            resultado = "Sua motivação talvez não esteja no processo, mas sim no resultado saboroso! 😋";
+        }
+
+        document.getElementById("resultadoMotivacao").innerText = resultado;
+
+        var idUsuario = sessionStorage.ID_USUARIO;
+
+        if (!idUsuario) {
+            console.error("ID do usuário não encontrado ao enviar quiz.");
+            return;
+        }
+
+        fetch("/quiz/resultados", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idUsuarioServer: idUsuario,
+                quizServer: resultadoQuiz
+            })
+        })
+            .then(res => res.json())
+            .then(resposta => {
+                console.log("Resultado enviado:", resposta);
+            })
+            .catch(erro => {
+                console.error("Erro ao enviar resultado:", erro);
+            });
+    }
+    // Gráfico - Porcentágem de motivações dos usuários (quiz).
+
+    function obterDadosGraficoMotivacao() {
+        fetch("/graficos/ultimos-resultados", { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log("Dados recebidos para gráfico de motivação:");
+                    console.log(resposta);
+
+                    plotarGraficoMotivacao(resposta);
+                });
+            } else {
+                console.error("Nenhum dado encontrado ou erro na API (motivação)");
+            }
+        }).catch(function (erro) {
+            console.error("Erro:", erro);
+        });
+    }
+
+    function plotarGraficoMotivacao(dadosRecebidos) {
+        console.log("Iniciando plotagem do gráfico de motivação...");
+
+        var labels = [];
+        var valores = [];
+
+        for (var i = 0; i < dadosRecebidos.length; i++) {
+            var item = dadosRecebidos[i];
+            labels.push(item.resultadoQuiz);
+            valores.push(item.quantidade);
+        }
+
+        console.log("Labels:");
+        console.log(labels);
+        console.log("Valores:");
+        console.log(valores);
+
+        var dados = {
+            labels: labels,
+            datasets: [{
+                data: valores,
+                backgroundColor: ["#ff4b90bb", "#a0f78adc", "#ff9f21d2", "#5caff3b9"],
+                borderColor: "white",
+                borderWidth: 2
+            }]
+        };
+
+
+        var config = {
+            type: "doughnut",
+            data: dados,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "bottom"
+                    },
+                    title: {
+                        display: true,
+                        text: "Motivação dos usuários na Cozinha"
+                    }
+                }
+            }
+        };
+
+        var meuGrafico = new Chart(
+            document.getElementById("graficoMotivacao"),
+            config
+        );
+    }
+
+    // Comparando minha atividade (usuário logado) com a média de todos os usuários.
+
+    function obterAtividadeUsuario() {
+        const idUsuario = sessionStorage.ID_USUARIO;
+
+        fetch(`/favoritos/atividade/${idUsuario}`)
+            .then(res => res.json())
+            .then(dados => {
+                const resultado = dados[0];
+
+                const favoritosUsuario = resultado.favoritosUsuario;
+                const mediaOutros = resultado.mediaOutros;
+
+                plotarGraficoComparativo(favoritosUsuario, mediaOutros);
+            })
+            .catch(erro => console.error("Erro ao buscar atividade:", erro));
+    }
+
+    function plotarGraficoComparativo(usuario, media) {
+        const ctx = document.getElementById("graficoComparativo").getContext("2d");
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Você', 'Média dos outros usuários'],
+                datasets: [{
+                    label: 'Quantidade de favoritos',
+                    data: [usuario, media],
+                    backgroundColor: ['#a0f78adc', '#ff9f21d2']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Comparativo de Favoritos'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
 
 </script>
 

@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
+        <link rel="icon" href="img/By Cooked.jpg">
 </head>
 
 <body class="registros">
@@ -79,11 +80,7 @@
             mensagem_erro.innerHTML = "email inválido (deve conter @)"
 
             return false;
-        } else {
-            cardErro.style.display = "block";
-            mensagem_erro.innerHTML = "Senha ou email inválido!"
-            setInterval(sumirMensagem, 5000)
-        }
+        } 
 
         console.log("FORM LOGIN: ", emailVar);
         console.log("FORM SENHA: ", senhaVar);

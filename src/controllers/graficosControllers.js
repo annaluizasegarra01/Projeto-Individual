@@ -50,11 +50,20 @@ function tipoPreferido(req, res) {
     });
 }
 
+function resumoUltimosResultados(req, res) {
+    graficosModel.obterResumoUltimosResultados()
+        .then(resultado => res.json(resultado))
+        .catch(erro => {
+            console.log("Erro ao buscar resumo:", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
 
 
 module.exports = {
     obterGraficoPizza,
     obterTopReceitas,
     favoritasUsuario,
-    tipoPreferido
+    tipoPreferido,
+    resumoUltimosResultados
 };

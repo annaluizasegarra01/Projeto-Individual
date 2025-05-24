@@ -57,6 +57,17 @@ function listarDetalhesFavoritos(req, res) {
         });
 }
 
+function atividadeUsuario(req, res) {
+    const idUsuario = req.params.idUsuario;
+
+    favoritosModel.atividadeUsuario(idUsuario)
+        .then(resultado => res.json(resultado))
+        .catch(erro => {
+            console.log("Erro ao buscar atividade:", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 
 
 module.exports = {
@@ -64,6 +75,7 @@ module.exports = {
     desfavoritar,
     verificarFavorito,
     listarFavoritosPorUsuario,
-    listarDetalhesFavoritos
+    listarDetalhesFavoritos,
+    atividadeUsuario
 };
 

@@ -21,7 +21,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 40px;
+    padding: 5px 30px;
     position: sticky;
     top: 0;
     background-color: #b1513e;
@@ -186,7 +186,7 @@ span {
     flex: 3;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 33px;
     margin: 10px;
     max-width: 800px;
 }
@@ -218,20 +218,29 @@ span {
     text-align: center;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 50px;
+}
+
+.graficosbarras {
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
 }
 
 .graficoBox1 {
-    height: 300px;
-    width: 300px;
+    height: 350px;
+    width: 380px;
     flex: 1;
     background-color: #ffffff;
     justify-content: center;
 }
 
 .graficoBox2 {
-    height: 200px;
-    width: 400px;
+    height: 230px;
+    width: 390px;
     flex: 1;
     background-color: #ffffff;
     justify-content: center;
@@ -242,7 +251,7 @@ span {
     border-radius: 12px;
     margin: 30px;
     width: 400px;
-    height: 780px;
+    height: 750px;
     margin-bottom: 15px;
     background-color: #fff6f6;
     box-shadow: 2px 2px 8px #1a1a1a85;

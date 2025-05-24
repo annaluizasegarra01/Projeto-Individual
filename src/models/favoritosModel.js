@@ -44,13 +44,25 @@ function listarDetalhesFavoritos(idUsuario) {
     return database.executar(instrucao);
 }
 
+function atividadeUsuario(idUsuario) {
+    const instrucao = `
+        SELECT 
+            (SELECT COUNT(*) FROM favoritos WHERE fk_usuario = ${idUsuario}) AS favoritosUsuario,
+            (SELECT AVG(qtd) FROM (
+                SELECT COUNT(*) AS qtd FROM favoritos WHERE fk_usuario != ${idUsuario} GROUP BY fk_usuario
+            ) AS sub) AS mediaOutros
+    `;
+    return database.executar(instrucao);
+}
+
 
 module.exports = {
     favoritar,
     desfavoritar,
     verificarFavorito,
     listarFavoritosPorUsuario,
-    listarDetalhesFavoritos
+    listarDetalhesFavoritos,
+    atividadeUsuario
 };
 
 
