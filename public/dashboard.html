@@ -101,7 +101,7 @@
                 <div class="graficoBox2">
                     <canvas id="graficoComparativo"></canvas>
                 </div>
-                
+
                 <div class="graficoBox2">
                     <canvas class="topReceitas" id="graficoTopReceitas"></canvas>
                 </div>
@@ -161,7 +161,7 @@
             console.warn("ID do usuário não encontrado. Parando execução de KPIs.");
             return;
         }
-        // kpi 1 
+        // KPI 1 
         fetch(`/graficos/favoritas-usuario/${idUsuario}`)
             .then(function (resposta) {
                 return resposta.json();
@@ -170,7 +170,7 @@
                 var total = dados.total;
                 document.getElementById("kpi-favoritadas").innerText = total;
 
-                // KPI 2
+                // KPI 2 - mesmo fetch da primeira kpi
                 var nivel = "Iniciante 🍳";
                 if (total >= 5 && total < 10) {
                     nivel = "Intermediário 🫕";
@@ -198,80 +198,55 @@
 
     }
 
+    // Gráfico 1 - Comparando minha atividade (usuário logado) com a média de todos os usuários.
 
-    // Obtendo Dados...
+    function obterAtividadeUsuario() {
+        const idUsuario = sessionStorage.ID_USUARIO;
 
-    function obterDadosGraficoPizza(idUsuario) {
+        fetch(`/graficos/atividade/${idUsuario}`)
+            .then(res => res.json())
+            .then(dados => {
+                const resultado = dados[0];
 
-        fetch(`/graficos/grafico-pizza/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log("Dados recebidos para gráfico de pizza:");
-                    console.log(resposta);
+                const mediaUser = resultado.mediaUser;
+                const mediaOutros = resultado.mediaOutros;
 
-                    plotarGraficoPizza(resposta);
-                });
-            } else {
-                console.error("Nenhum dado encontrado ou erro na API (pizza)");
-            }
-        }).catch(function (erro) {
-            console.error("Erro:", erro);
-        });
+                plotarGraficoComparativo(mediaUser, mediaOutros);
+            })
+            .catch(erro => console.error("Erro ao buscar atividade:", erro));
     }
 
-    // Gráfico Pizza - tipos receita.
+    function plotarGraficoComparativo(usuario, media) {
+        const ctx = document.getElementById("graficoComparativo").getContext("2d");
 
-    function plotarGraficoPizza(dadosRecebidos) {
-        console.log("Iniciando plotagem do gráfico de pizza...");
-
-        var labels = [];
-        var valores = [];
-
-        for (var i = 0; i < dadosRecebidos.length; i++) {
-            var item = dadosRecebidos[i];
-            labels.push(item.tipo);
-            valores.push(item.total);
-        }
-
-        console.log("Labels:");
-        console.log(labels);
-        console.log("Valores:");
-        console.log(valores);
-
-        var dados = {
-            labels: labels,
-            datasets: [{
-                data: valores,
-                backgroundColor: ["#ff9f21d2", "#ff4b90bb", "#a0f78adc"],
-                borderColor: "white",
-                borderWidth: 2
-            }]
-        };
-
-        var config = {
-            type: "pie",
-            data: dados,
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Você', 'Média dos outros usuários'],
+                datasets: [{
+                    label: 'Quantidade de favoritos',
+                    data: [usuario, media],
+                    backgroundColor: ['#a0f78adc', '#ff9f21d2']
+                }]
+            },
             options: {
                 responsive: true,
                 plugins: {
-                    legend: {
-                        position: "bottom"
-                    },
                     title: {
                         display: true,
-                        text: "Suas Receitas Favoritadas por Tipo"
+                        text: 'Comparativo de Favoritos'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
             }
-        };
-
-        var meuGrafico = new Chart(
-            document.getElementById("graficoPizza"),
-            config
-        );
+        });
     }
 
-    // Obtendo os dadinhos...
+    // Gráfico 2 - Ranking top 3 receitas mais favoritadas.
 
     function obterDadosGraficoTopReceitas() {
 
@@ -292,7 +267,6 @@
                 console.error("Erro:", erro);
             });
     }
-    // Gráfico - Ranking 3 receitas mais favoritadas.
 
     function plotarGraficoTopReceitas(dadosRecebidos) {
         console.log("Iniciando plotagem do gráfico Top Receitas...");
@@ -351,7 +325,77 @@
         );
     }
 
-    //Mini Quiz
+    // Gráfico 3 - Pizza - tipos receitas favoritadas.
+
+    function obterDadosGraficoPizza(idUsuario) {
+
+        fetch(`/graficos/grafico-pizza/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log("Dados recebidos para gráfico de pizza:");
+                    console.log(resposta);
+
+                    plotarGraficoPizza(resposta);
+                });
+            } else {
+                console.error("Nenhum dado encontrado ou erro na API (pizza)");
+            }
+        }).catch(function (erro) {
+            console.error("Erro:", erro);
+        });
+    }
+
+    function plotarGraficoPizza(dadosRecebidos) {
+        console.log("Iniciando plotagem do gráfico de pizza...");
+
+        var labels = [];
+        var valores = [];
+
+        for (var i = 0; i < dadosRecebidos.length; i++) {
+            var item = dadosRecebidos[i];
+            labels.push(item.tipo);
+            valores.push(item.total);
+        }
+
+        console.log("Labels:");
+        console.log(labels);
+        console.log("Valores:");
+        console.log(valores);
+
+        var dados = {
+            labels: labels,
+            datasets: [{
+                data: valores,
+                backgroundColor: ["#ff9f21d2", "#ff4b90bb", "#a0f78adc"],
+                borderColor: "white",
+                borderWidth: 2
+            }]
+        };
+
+        var config = {
+            type: "pie",
+            data: dados,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "bottom"
+                    },
+                    title: {
+                        display: true,
+                        text: "Suas Receitas Favoritadas por Tipo"
+                    }
+                }
+            }
+        };
+
+        var meuGrafico = new Chart(
+            document.getElementById("graficoPizza"),
+            config
+        );
+    }
+
+    //Cálculo do resultado do quiz com condicionais e inserção do resultado no banco de dados.
 
     function verResultado() {
 
@@ -431,7 +475,8 @@
                 console.error("Erro ao enviar resultado:", erro);
             });
     }
-    // Gráfico - Porcentágem de motivações dos usuários (quiz).
+
+    // Gráfico 4 - Porcentágem de motivações dos usuários (quiz).
 
     function obterDadosGraficoMotivacao() {
         fetch("/graficos/ultimos-resultados", { cache: 'no-store' }).then(function (response) {
@@ -502,55 +547,6 @@
         );
 
     }
-
-    // Comparando minha atividade (usuário logado) com a média de todos os usuários.
-
-    function obterAtividadeUsuario() {
-        const idUsuario = sessionStorage.ID_USUARIO;
-
-        fetch(`/favoritos/atividade/${idUsuario}`)
-            .then(res => res.json())
-            .then(dados => {
-                const resultado = dados[0];
-
-                const mediaUser = resultado.mediaUser;
-                const mediaOutros = resultado.mediaOutros;
-
-                plotarGraficoComparativo(mediaUser, mediaOutros);
-            })
-            .catch(erro => console.error("Erro ao buscar atividade:", erro));
-    }
-
-    function plotarGraficoComparativo(usuario, media) {
-        const ctx = document.getElementById("graficoComparativo").getContext("2d");
-
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Você', 'Média dos outros usuários'],
-                datasets: [{
-                    label: 'Quantidade de favoritos',
-                    data: [usuario, media],
-                    backgroundColor: ['#a0f78adc', '#ff9f21d2']
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Comparativo de Favoritos'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    }
-
 
 </script>
 
