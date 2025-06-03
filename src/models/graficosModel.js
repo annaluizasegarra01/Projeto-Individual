@@ -2,60 +2,55 @@ const database = require("../database/config");
 
 function contarFavoritosPorTipo(idUsuario) {
     const instrucaoSql = `
-        SELECT r.tipo, COUNT(*) AS total
-        FROM favoritos f
-        JOIN receitas r ON f.fk_receitas = r.idReceita
-        WHERE f.fk_usuario = ${idUsuario}
-        GROUP BY r.tipo;
+        select r.tipo, COUNT(*) as total
+        from favoritos as f
+        inner join receitas as r on f.fk_receitas = r.idReceita
+        where fk_usuario = ${idUsuario}
+        group by r.tipo
+        order by total desc;
     `;
     return database.executar(instrucaoSql);
 }
 
 function topReceitasFavoritas() {
     const instrucaoSql = `
-        SELECT r.nome, COUNT(*) AS total
-        FROM favoritos f
-        JOIN receitas r ON f.fk_receitas = r.idReceita
-        GROUP BY r.nome
-        ORDER BY total DESC
-        LIMIT 3;
+        select r.nome, count(*) as total from favoritos as f 
+        inner join receitas as r on f.fk_receitas = r.idReceita
+        group by r.nome 
+        order by total desc
+        limit 3;
     `;
     return database.executar(instrucaoSql);
 }
 
 function favoritasUsuario(idUsuario) {
     var instrucaoSql = `
-        SELECT COUNT(*) AS total
-        FROM favoritos
-        WHERE fk_usuario = ${idUsuario};
+        select count(*) as total from favoritos
+        where fk_usuario =  ${idUsuario};
     `;
     return database.executar(instrucaoSql);
 }
 
 function tipoPreferido(idUsuario) {
     var instrucaoSql = `
-        SELECT r.tipo, COUNT(*) AS total
-        FROM favoritos f
-        JOIN receitas r ON f.fk_receitas = r.idReceita
-        WHERE f.fk_usuario = ${idUsuario}
-        GROUP BY r.tipo
-        ORDER BY total DESC
-        LIMIT 1;
+        select tipo from (select r.tipo, COUNT(*) AS total from favoritos as f
+        inner join receitas as r on f.fk_receitas = r.idReceita
+        where fk_usuario = ${idUsuario}
+        group by r.tipo
+        ) as contagem
+        order by total desc
+        limit 1;
     `;
     return database.executar(instrucaoSql);
 }
 
+
+// Quiz Gráfico.
 function obterResumoUltimosResultados() {
     const instrucaoSql = `
-        SELECT resultadoQuiz, COUNT(*) AS quantidade
-        FROM quiz
-        WHERE idQuiz IN (
-            SELECT MAX(idQuiz)
-            FROM quiz
-            WHERE fk_usuario IS NOT NULL
-            GROUP BY fk_usuario
-        )
-        GROUP BY resultadoQuiz;
+        select resultadoQuiz, COUNT(*) as quantidade from quiz
+        where idQuiz in (select MAX(idQuiz) from quiz group by fk_usuario)
+        group by resultadoQuiz;
     `;
     return database.executar(instrucaoSql);
 }

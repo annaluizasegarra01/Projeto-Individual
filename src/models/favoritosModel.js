@@ -3,8 +3,8 @@ var database = require("../database/config");
 // Adicionar um favorito
 function favoritar(idUsuario, idReceita) {
     const instrucao = `
-        INSERT INTO favoritos (fk_usuario, fk_receitas)
-        VALUES (${idUsuario}, ${idReceita});
+        insert into favoritos (fk_usuario, fk_receitas)
+        values (${idUsuario}, ${idReceita});
     `;
     return database.executar(instrucao);
 }
@@ -12,8 +12,8 @@ function favoritar(idUsuario, idReceita) {
 // Remover um favorito
 function desfavoritar(idUsuario, idReceita) {
     const instrucao = `
-        DELETE FROM favoritos
-        WHERE fk_usuario = ${idUsuario} AND fk_receitas = ${idReceita};
+        delete from favoritos
+        where fk_usuario = ${idUsuario} and fk_receitas = ${idReceita};
     `;
     return database.executar(instrucao);
 }
@@ -21,36 +21,34 @@ function desfavoritar(idUsuario, idReceita) {
 // Verificar se é favorito
 function verificarFavorito(idUsuario, idReceita) {
     const instrucao = `
-        SELECT * FROM favoritos
-        WHERE fk_usuario = ${idUsuario} AND fk_receitas = ${idReceita};
+        select * from favoritos
+        where fk_usuario = ${idUsuario} and fk_receitas = ${idReceita};
     `;
     return database.executar(instrucao);
 }
 
 function listarFavoritosPorUsuario(idUsuario) {
     const instrucao = `
-        SELECT fk_receitas FROM favoritos WHERE fk_usuario = ${idUsuario};
+        select fk_receitas from favoritos where fk_usuario = ${idUsuario};
     `;
     return database.executar(instrucao);
 }
 
 function listarDetalhesFavoritos(idUsuario) {
     const instrucao = `
-        SELECT r.idReceita, r.nome, r.descricao, r.tipo
-        FROM receitas r
-        INNER JOIN favoritos f ON r.idReceita = f.fk_receitas
-        WHERE f.fk_usuario = ${idUsuario};
+        select r.idReceita, r.nome, r.descricao, r.tipo
+        from receitas r
+        inner join favoritos f on r.idReceita = f.fk_receitas
+        where f.fk_usuario = ${idUsuario};
     `;
     return database.executar(instrucao);
 }
 
 function atividadeUsuario(idUsuario) {
     const instrucao = `
-        SELECT 
-            (SELECT COUNT(*) FROM favoritos WHERE fk_usuario = ${idUsuario}) AS favoritosUsuario,
-            (SELECT AVG(qtd) FROM (
-                SELECT COUNT(*) AS qtd FROM favoritos WHERE fk_usuario != ${idUsuario} GROUP BY fk_usuario
-            ) AS sub) AS mediaOutros
+        select (select count(*) from favoritos where fk_usuario = ${idUsuario}) as mediaUser,
+        (select avg(qtd) from (select count(*) as qtd from favoritos where fk_usuario != ${idUsuario}
+        group by fk_usuario)as subDeMedia) as mediaOutros;
     `;
     return database.executar(instrucao);
 }

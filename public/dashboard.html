@@ -495,10 +495,12 @@
             }
         };
 
+
         var meuGrafico = new Chart(
             document.getElementById("graficoMotivacao"),
             config
         );
+
     }
 
     // Comparando minha atividade (usuário logado) com a média de todos os usuários.
@@ -511,10 +513,10 @@
             .then(dados => {
                 const resultado = dados[0];
 
-                const favoritosUsuario = resultado.favoritosUsuario;
+                const mediaUser = resultado.mediaUser;
                 const mediaOutros = resultado.mediaOutros;
 
-                plotarGraficoComparativo(favoritosUsuario, mediaOutros);
+                plotarGraficoComparativo(mediaUser, mediaOutros);
             })
             .catch(erro => console.error("Erro ao buscar atividade:", erro));
     }
